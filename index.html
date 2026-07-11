@@ -1,1603 +1,389 @@
 <!DOCTYPE html>
 <html lang="lv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deju klubs "TRIUMFS" — Ogre</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,500;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --black:#0a0a0a;
-    --charcoal:#1c1c1f;
-    --grey:#8a8a8f;
-    --grey-light:#c7c7cc;
-    --off-white:#f3f1ee;
-    --pink:FF2EFF;
-    --pink-deep:#d6357a;
-    --pink-glow: rgba(255,95,162,0.35);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--black);
-    color:var(--off-white);
-    font-family:'Outfit', sans-serif;
-    font-weight:300;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--pink);color:var(--black);}
-
-  /* Scrollbar */
-  ::-webkit-scrollbar{width:10px;}
-  ::-webkit-scrollbar-track{background:var(--black);}
-  ::-webkit-scrollbar-thumb{background:var(--pink-deep);border-radius:5px;}
-
-  h1,h2,h3,h4{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    letter-spacing:0.01em;
-  }
-
-  .eyebrow{
-    font-family:'Outfit',sans-serif;
-    text-transform:uppercase;
-    letter-spacing:0.35em;
-    font-size:0.7rem;
-    color:var(--pink);
-    font-weight:600;
-  }
-
-  a{color:inherit;}
-
-  /* ============ NAV ============ */
-  header{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:1000;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:1.4rem 5%;
-    background:rgba(10,10,10,0.55);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(255,255,255,0.06);
-    transition:padding 0.3s ease, background 0.3s ease;
-  }
-  header.scrolled{
-    padding:0.8rem 5%;
-    background:rgba(10,10,10,0.85);
-  }
-  .logo{
-    display:flex;
-    align-items:center;
-    gap:0.7rem;
-    font-family:'Playfair Display', serif;
-    font-size:1.5rem;
-    font-weight:900;
-    letter-spacing:0.12em;
-    color:var(--off-white);
-    text-decoration:none;
-    cursor:pointer;
-  }
-  .logo-mark{
-    width:34px;height:34px;
-    flex-shrink:0;
-  }
-  .logo span{color:var(--pink);}
-
-  nav ul{
-    display:flex;
-    gap:2.4rem;
-    list-style:none;
-  }
-  nav a{
-    text-decoration:none;
-    font-size:0.85rem;
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-    font-weight:500;
-    color:var(--grey-light);
-    position:relative;
-    padding-bottom:6px;
-    transition:color 0.25s ease;
-  }
-  nav a::after{
-    content:'';
-    position:absolute;
-    bottom:0;left:0;
-    width:0%;height:2px;
-    background:var(--pink);
-    transition:width 0.3s ease;
-  }
-  nav a:hover{color:var(--off-white);}
-  nav a:hover::after{width:100%;}
-
-  .nav-toggle{
-    display:none;
-    flex-direction:column;
-    gap:5px;
-    cursor:pointer;
-    background:none;
-    border:none;
-    z-index:1001;
-  }
-  .nav-toggle span{
-    width:26px;height:2px;
-    background:var(--off-white);
-    transition:0.3s;
-  }
-
-  /* ============ HERO ============ */
-  .hero{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    overflow:hidden;
-    padding:6rem 5% 4rem;
-  }
-  .hero-bg{
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 30%, rgba(255,95,162,0.18), transparent 65%),
-      linear-gradient(180deg, #0a0a0a 0%, #14141a 60%, #0a0a0a 100%);
-    z-index:0;
-  }
-  .hero-grain{
-    position:absolute;
-    inset:0;
-    opacity:0.05;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    z-index:0;
-    pointer-events:none;
-  }
-
-  .hero-content{
-    position:relative;
-    z-index:2;
-    max-width:900px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .hero-content .eyebrow{margin-bottom:1.4rem;}
-  .hero h1{
-    font-size:clamp(3rem, 9vw, 7.5rem);
-    line-height:1.0;
-    letter-spacing:0.02em;
-    text-transform:uppercase;
-    color:var(--off-white);
-  }
-  .hero h1 em{
-    font-style:italic;
-    color:var(--pink);
-    font-weight:400;
-    display:block;
-    font-size:0.45em;
-    letter-spacing:0.5em;
-    margin-top:0.6rem;
-  }
-  .hero-sub{
-    margin-top:2rem;
-    max-width:560px;
-    font-size:1.05rem;
-    line-height:1.8;
-    color:var(--grey-light);
-    font-weight:300;
-  }
-  .hero-cta{
-    margin-top:2.8rem;
-    display:flex;
-    gap:1.2rem;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-
-  /* Buttons */
-  .btn{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    gap:0.6rem;
-    padding:1rem 2.4rem;
-    border-radius:999px;
-    font-size:0.85rem;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    font-weight:600;
-    text-decoration:none;
-    cursor:pointer;
-    border:1px solid transparent;
-    transition:transform 0.35s cubic-bezier(.2,.9,.3,1.2), box-shadow 0.35s ease, color 0.3s ease, background 0.3s ease;
-    overflow:hidden;
-    isolation:isolate;
-  }
-  .btn-primary{
-    background:var(--pink);
-    color:var(--black);
-  }
-  .btn-primary::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(120deg, var(--pink-deep), var(--pink));
-    z-index:-1;
-    opacity:0;
-    transition:opacity 0.35s ease;
-  }
-  .btn-primary:hover{
-    transform:translateY(-3px) scale(1.03);
-    box-shadow:0 12px 30px var(--pink-glow);
-  }
-  .btn-primary:hover::before{opacity:1;}
-  .btn-primary:active{transform:translateY(-1px) scale(0.98);}
-
-  .btn-outline{
-    background:transparent;
-    color:var(--off-white);
-    border:1px solid rgba(255,255,255,0.25);
-  }
-  .btn-outline:hover{
-    border-color:var(--pink);
-    color:var(--pink);
-    transform:translateY(-3px);
-    box-shadow:0 8px 24px rgba(255,95,162,0.15);
-  }
-  .btn-outline:active{transform:translateY(-1px);}
-
-  .btn-sm{padding:0.7rem 1.6rem;font-size:0.72rem;}
-
-  /* Ripple */
-  .btn .ripple{
-    position:absolute;
-    border-radius:50%;
-    background:rgba(255,255,255,0.5);
-    transform:scale(0);
-    animation:ripple 0.6s ease-out;
-    pointer-events:none;
-  }
-  .btn-primary .ripple{background:rgba(10,10,10,0.35);}
-  @keyframes ripple{to{transform:scale(4);opacity:0;}}
-
-  /* Scroll cue */
-  .scroll-cue{
-    position:absolute;
-    bottom:2.4rem;left:50%;
-    transform:translateX(-50%);
-    z-index:2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:0.6rem;
-    color:var(--grey);
-    font-size:0.7rem;
-    letter-spacing:0.3em;
-    text-transform:uppercase;
-  }
-  .scroll-cue .line{
-    width:1px;height:40px;
-    background:linear-gradient(to bottom, var(--pink), transparent);
-    animation:scrollLine 2s ease-in-out infinite;
-  }
-  @keyframes scrollLine{
-    0%,100%{transform:scaleY(1);opacity:0.4;}
-    50%{transform:scaleY(0.5);opacity:1;}
-  }
-
-  /* Dancer silhouette signature element */
-  .dancer-figure{
-    position:absolute;
-    z-index:1;
-    opacity:0.9;
-    pointer-events:none;
-  }
-  .dancer-figure svg{display:block;}
-  .dancer-1{
-    right:2%; bottom:0;
-    width:min(34vw, 420px);
-    animation: float1 8s ease-in-out infinite;
-  }
-  .dancer-2{
-    left:1%; top:14%;
-    width:min(20vw, 260px);
-    opacity:0.35;
-    animation: float2 11s ease-in-out infinite;
-  }
-  @keyframes float1{
-    0%,100%{transform:translateY(0) rotate(0deg);}
-    50%{transform:translateY(-22px) rotate(1.5deg);}
-  }
-  @keyframes float2{
-    0%,100%{transform:translateY(0) rotate(0deg) scale(1);}
-    50%{transform:translateY(18px) rotate(-2deg) scale(1.03);}
-  }
-
-  /* ============ SECTION LAYOUT ============ */
-  section{
-    position:relative;
-    padding:7rem 5%;
-  }
-  .section-inner{
-    max-width:1180px;
-    margin:0 auto;
-  }
-  .section-head{
-    text-align:center;
-    max-width:720px;
-    margin:0 auto 4rem;
-  }
-  .section-head .eyebrow{display:block;margin-bottom:1rem;}
-  .section-head h2{
-    font-size:clamp(2.2rem, 5vw, 3.6rem);
-    line-height:1.1;
-  }
-  .section-head h2 .accent{color:var(--pink);font-style:italic;}
-  .section-head p{
-    margin-top:1.2rem;
-    color:var(--grey-light);
-    line-height:1.8;
-    font-size:1.02rem;
-  }
-
-  .divider{
-    width:60px;height:2px;
-    background:var(--pink);
-    margin:1.5rem auto 0;
-    border-radius:2px;
-  }
-
-  /* reveal on scroll */
-  .reveal{
-    opacity:0;
-    transform:translateY(40px);
-    transition:opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.7,.2,1);
-  }
-  .reveal.visible{
-    opacity:1;
-    transform:translateY(0);
-  }
-  .reveal-delay-1{transition-delay:0.1s;}
-  .reveal-delay-2{transition-delay:0.2s;}
-  .reveal-delay-3{transition-delay:0.3s;}
-  .reveal-delay-4{transition-delay:0.4s;}
-
-  /* ============ ABOUT SECTION ============ */
-  #about{background:var(--black);}
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.1fr 1fr;
-    gap:4rem;
-    align-items:start;
-  }
-  .about-text p{
-    color:var(--grey-light);
-    line-height:1.9;
-    margin-bottom:1.3rem;
-    font-size:1rem;
-  }
-  .about-text strong{color:var(--off-white);font-weight:500;}
-  .about-text .lead{
-    font-family:'Playfair Display', serif;
-    font-size:1.5rem;
-    font-style:italic;
-    color:var(--off-white);
-    line-height:1.6;
-    margin-bottom:1.6rem;
-  }
-
-  .stat-card{
-    background:var(--charcoal);
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:18px;
-    padding:2.4rem;
-    margin-bottom:1.6rem;
-    transition:transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .stat-card::before{
-    content:'';
-    position:absolute;
-    top:-50%;right:-50%;
-    width:100%;height:100%;
-    background:radial-gradient(circle, var(--pink-glow), transparent 70%);
-    opacity:0;
-    transition:opacity 0.4s ease;
-  }
-  .stat-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(255,95,162,0.35);
-    box-shadow:0 16px 40px rgba(0,0,0,0.4);
-  }
-  .stat-card:hover::before{opacity:1;}
-  .stat-number{
-    font-family:'Playfair Display',serif;
-    font-size:3.4rem;
-    color:var(--pink);
-    line-height:1;
-    font-weight:900;
-  }
-  .stat-label{
-    margin-top:0.6rem;
-    color:var(--grey-light);
-    font-size:0.95rem;
-    letter-spacing:0.05em;
-  }
-
-  /* Leadership cards */
-  .leader-card{
-    margin-top:3rem;
-    background:linear-gradient(145deg, var(--charcoal), #141417);
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:20px;
-    padding:2.6rem;
-    transition:transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .leader-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 18px 50px rgba(0,0,0,0.45);
-  }
-  .leader-name{
-    font-family:'Playfair Display',serif;
-    font-size:1.6rem;
-    color:var(--pink);
-    margin-bottom:0.3rem;
-  }
-  .leader-role{
-    font-size:0.78rem;
-    letter-spacing:0.25em;
-    text-transform:uppercase;
-    color:var(--grey);
-    margin-bottom:1.2rem;
-  }
-  .leader-card p{
-    color:var(--grey-light);
-    line-height:1.85;
-    font-size:0.97rem;
-  }
-
-  /* ============ OFFER SECTION (Mēs piedāvājam) ============ */
-  #offer{
-    background:linear-gradient(180deg, #0a0a0a 0%, #16141a 50%, #0a0a0a 100%);
-  }
-
-  .offer-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
-    gap:1.4rem;
-  }
-  .offer-card{
-    background:var(--charcoal);
-    border:1px solid rgba(255,255,255,0.05);
-    border-radius:16px;
-    padding:2rem 1.8rem;
-    text-align:left;
-    transition:transform 0.4s cubic-bezier(.2,.8,.3,1.2), border-color 0.35s ease, background 0.35s ease;
-    cursor:default;
-    position:relative;
-  }
-  .offer-card:hover{
-    transform:translateY(-8px) rotate(-0.5deg);
-    border-color:var(--pink);
-    background:#221c22;
-  }
-  .offer-icon{
-    width:42px;height:42px;
-    margin-bottom:1.2rem;
-    color:var(--pink);
-  }
-  .offer-card h4{
-    font-size:1.15rem;
-    margin-bottom:0.5rem;
-    color:var(--off-white);
-    font-weight:600;
-    font-family:'Outfit',sans-serif;
-  }
-  .offer-card p{
-    color:var(--grey);
-    font-size:0.9rem;
-    line-height:1.6;
-  }
-
-  .extra-services{
-    margin-top:3.5rem;
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
-    gap:1.2rem;
-  }
-  .extra-pill{
-    display:flex;
-    align-items:center;
-    gap:1rem;
-    padding:1.4rem 1.6rem;
-    background:rgba(255,95,162,0.05);
-    border:1px solid rgba(255,95,162,0.18);
-    border-radius:14px;
-    transition:background 0.3s ease, transform 0.3s ease;
-    font-size:0.95rem;
-    color:var(--off-white);
-  }
-  .extra-pill:hover{
-    background:rgba(255,95,162,0.12);
-    transform:translateX(6px);
-  }
-  .extra-pill .dot{
-    width:10px;height:10px;
-    background:var(--pink);
-    border-radius:50%;
-    flex-shrink:0;
-    box-shadow:0 0 0 4px var(--pink-glow);
-  }
-
-  /* Teachers carousel-like grid */
-  .teacher-grid{
-    margin-top:4.5rem;
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-    gap:1.6rem;
-  }
-  .teacher-card{
-    background:var(--charcoal);
-    border-radius:18px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,0.06);
-    transition:transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .teacher-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 18px 45px rgba(0,0,0,0.45);
-  }
-  .teacher-photo{
-    height:170px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(135deg, #2a2530, #14121a);
-    position:relative;
-    overflow:hidden;
-  }
-  .teacher-photo svg{
-    width:90px;height:90px;
-    color:var(--pink);
-    opacity:0.85;
-    transition:transform 0.5s ease;
-  }
-  .teacher-card:hover .teacher-photo svg{transform:scale(1.1) rotate(4deg);}
-  .teacher-body{padding:1.6rem 1.8rem 1.9rem;}
-  .teacher-body h4{
-    font-family:'Playfair Display',serif;
-    font-size:1.3rem;
-    color:var(--off-white);
-    margin-bottom:0.2rem;
-  }
-  .teacher-tag{
-    font-size:0.72rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--pink);
-    margin-bottom:0.9rem;
-    display:block;
-  }
-  .teacher-body p{
-    color:var(--grey-light);
-    font-size:0.9rem;
-    line-height:1.7;
-  }
-
-  /* Show group */
-  .show-group{
-    margin-top:5rem;
-    background:radial-gradient(ellipse at top right, rgba(255,95,162,0.12), transparent 60%), var(--charcoal);
-    border-radius:24px;
-    padding:3.5rem;
-    border:1px solid rgba(255,255,255,0.06);
-  }
-  .show-group h3{
-    font-size:2.2rem;
-    margin-bottom:1.2rem;
-  }
-  .show-group h3 span{color:var(--pink);font-style:italic;}
-  .show-group p{
-    color:var(--grey-light);
-    line-height:1.9;
-    max-width:780px;
-  }
-  .venue-tags{
-    margin-top:1.8rem;
-    display:flex;
-    flex-wrap:wrap;
-    gap:0.7rem;
-  }
-  .venue-tag{
-    padding:0.5rem 1.1rem;
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:999px;
-    font-size:0.8rem;
-    color:var(--grey-light);
-    transition:all 0.3s ease;
-  }
-  .venue-tag:hover{
-    border-color:var(--pink);
-    color:var(--pink);
-    transform:translateY(-2px);
-  }
-
-  /* ============ NEWS SECTION ============ */
-  #news{background:var(--black);}
-  .news-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-    gap:1.8rem;
-  }
-  .news-card{
-    background:var(--charcoal);
-    border-radius:18px;
-    border:1px solid rgba(255,255,255,0.06);
-    overflow:hidden;
-    transition:transform 0.4s ease, box-shadow 0.4s ease;
-  }
-  .news-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 16px 40px rgba(0,0,0,0.4);
-  }
-  .news-banner{
-    height:8px;
-    background:linear-gradient(90deg, var(--pink), var(--pink-deep));
-  }
-  .news-body{padding:2rem;}
-  .news-date{
-    font-size:0.75rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--grey);
-    margin-bottom:0.8rem;
-    display:block;
-  }
-  .news-body h4{
-    font-family:'Playfair Display',serif;
-    font-size:1.35rem;
-    margin-bottom:0.8rem;
-    color:var(--off-white);
-  }
-  .news-body p{
-    color:var(--grey-light);
-    font-size:0.92rem;
-    line-height:1.75;
-    margin-bottom:1.2rem;
-  }
-  .news-link{
-    display:inline-flex;
-    align-items:center;
-    gap:0.5rem;
-    font-size:0.78rem;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--pink);
-    text-decoration:none;
-    font-weight:600;
-    cursor:pointer;
-    border:none;
-    background:none;
-    padding:0;
-    transition:gap 0.3s ease;
-  }
-  .news-link:hover{gap:0.9rem;}
-  .news-link svg{width:14px;height:14px;transition:transform 0.3s ease;}
-  .news-link:hover svg{transform:translateX(4px);}
-
-  /* ============ RULES / PRACTICAL INFO ============ */
-  #rules{
-    background:linear-gradient(180deg, #0a0a0a 0%, #14141a 100%);
-  }
-  .rules-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:3rem;
-  }
-  .rules-card{
-    background:var(--charcoal);
-    border-radius:20px;
-    padding:2.6rem;
-    border:1px solid rgba(255,255,255,0.06);
-  }
-  .rules-card h3{
-    font-size:1.5rem;
-    margin-bottom:1.4rem;
-    color:var(--pink);
-    font-style:italic;
-  }
-  .rules-card ol, .rules-card ul{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:0.9rem;
-  }
-  .rules-card li{
-    color:var(--grey-light);
-    font-size:0.92rem;
-    line-height:1.7;
-    padding-left:1.8rem;
-    position:relative;
-  }
-  .rules-card li::before{
-    content:'';
-    position:absolute;
-    left:0;top:0.55rem;
-    width:8px;height:8px;
-    border-radius:50%;
-    background:var(--pink);
-    opacity:0.7;
-  }
-
-  /* ============ GUESTBOOK SECTION ============ */
-  #guestbook{background:var(--black);}
-  .guestbook-wrap{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:4rem;
-    align-items:flex-start;
-  }
-  .gb-form{
-    background:var(--charcoal);
-    border-radius:20px;
-    padding:2.6rem;
-    border:1px solid rgba(255,255,255,0.06);
-  }
-  .gb-form label{
-    display:block;
-    font-size:0.75rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--grey);
-    margin-bottom:0.6rem;
-    margin-top:1.4rem;
-  }
-  .gb-form label:first-of-type{margin-top:0;}
-  .gb-form input, .gb-form textarea{
-    width:100%;
-    background:#141318;
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    padding:0.9rem 1.1rem;
-    color:var(--off-white);
-    font-family:'Outfit',sans-serif;
-    font-size:0.95rem;
-    transition:border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  .gb-form input:focus, .gb-form textarea:focus{
-    outline:none;
-    border-color:var(--pink);
-    box-shadow:0 0 0 4px var(--pink-glow);
-  }
-  .gb-form textarea{resize:vertical;min-height:120px;font-family:'Outfit',sans-serif;}
-  .gb-form .btn{margin-top:1.8rem;width:100%;justify-content:center;border:none;}
-
-  .gb-entries{display:flex;flex-direction:column;gap:1.4rem;}
-  .gb-entry{
-    background:var(--charcoal);
-    border-radius:16px;
-    padding:1.8rem 2rem;
-    border:1px solid rgba(255,255,255,0.06);
-    transition:transform 0.3s ease, border-color 0.3s ease;
-  }
-  .gb-entry:hover{
-    transform:translateX(6px);
-    border-color:rgba(255,95,162,0.25);
-  }
-  .gb-entry-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    margin-bottom:0.6rem;
-  }
-  .gb-entry-name{
-    font-family:'Playfair Display',serif;
-    font-size:1.1rem;
-    color:var(--pink);
-  }
-  .gb-entry-date{
-    font-size:0.72rem;
-    color:var(--grey);
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-  }
-  .gb-entry p{
-    color:var(--grey-light);
-    font-size:0.93rem;
-    line-height:1.7;
-  }
-  #gb-feedback{
-    margin-top:1rem;
-    font-size:0.85rem;
-    color:var(--pink);
-    opacity:0;
-    transition:opacity 0.4s ease;
-  }
-  #gb-feedback.show{opacity:1;}
-
-  /* ============ FOOTER / CONTACT ============ */
-  footer{
-    background:#080808;
-    padding:5rem 5% 2.5rem;
-    border-top:1px solid rgba(255,255,255,0.06);
-  }
-  .footer-grid{
-    max-width:1180px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:1.3fr 1fr 1fr;
-    gap:3rem;
-    margin-bottom:3rem;
-  }
-  .footer-brand .logo{margin-bottom:1.2rem;}
-  .footer-brand p{
-    color:var(--grey);
-    line-height:1.8;
-    font-size:0.92rem;
-    max-width:340px;
-  }
-  .footer-col h5{
-    font-size:0.8rem;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--pink);
-    margin-bottom:1.4rem;
-  }
-  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem;}
-  .footer-col a{
-    color:var(--grey-light);
-    text-decoration:none;
-    font-size:0.92rem;
-    transition:color 0.3s ease, padding-left 0.3s ease;
-    display:inline-block;
-  }
-  .footer-col a:hover{color:var(--pink);padding-left:6px;}
-  .footer-col p{color:var(--grey-light);font-size:0.92rem;line-height:1.8;}
-
-  .footer-bottom{
-    max-width:1180px;
-    margin:0 auto;
-    padding-top:2rem;
-    border-top:1px solid rgba(255,255,255,0.06);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:1rem;
-    font-size:0.8rem;
-    color:var(--grey);
-  }
-  .footer-bottom span{color:var(--pink);}
-
-  /* social icons */
-  .socials{display:flex;gap:0.9rem;margin-top:1.6rem;}
-  .social-btn{
-    width:42px;height:42px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,0.12);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--grey-light);
-    transition:all 0.3s ease;
-    cursor:pointer;
-    text-decoration:none;
-  }
-  .social-btn:hover{
-    border-color:var(--pink);
-    color:var(--pink);
-    transform:translateY(-3px) rotate(8deg);
-    box-shadow:0 8px 20px var(--pink-glow);
-  }
-  .social-btn svg{width:18px;height:18px;}
-
-  /* ============ FLOATING BACK TO TOP ============ */
-  .to-top{
-    position:fixed;
-    bottom:2rem;right:2rem;
-    width:50px;height:50px;
-    border-radius:50%;
-    background:var(--pink);
-    color:var(--black);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    border:none;
-    z-index:900;
-    opacity:0;
-    transform:translateY(20px) scale(0.8);
-    transition:opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow:0 8px 24px var(--pink-glow);
-  }
-  .to-top.show{opacity:1;transform:translateY(0) scale(1);}
-  .to-top:hover{box-shadow:0 12px 32px var(--pink-glow);transform:translateY(-4px) scale(1.05);}
-  .to-top svg{width:20px;height:20px;}
-
-  /* ============ RESPONSIVE ============ */
-  @media (max-width: 980px){
-    .about-grid, .guestbook-wrap, .rules-grid{
-      grid-template-columns:1fr;
-      gap:2.5rem;
-    }
-    .footer-grid{grid-template-columns:1fr;gap:2.5rem;}
-    .dancer-1{width:46vw;opacity:0.5;}
-    .dancer-2{display:none;}
-  }
-  @media (max-width: 760px){
-    nav ul{
-      position:fixed;
-      top:0;right:0;
-      height:100vh;
-      width:min(78vw, 320px);
-      background:#0d0d10;
-      flex-direction:column;
-      justify-content:center;
-      align-items:flex-start;
-      padding:3rem;
-      gap:2rem;
-      transform:translateX(100%);
-      transition:transform 0.4s cubic-bezier(.2,.8,.2,1);
-      box-shadow:-20px 0 60px rgba(0,0,0,0.5);
-    }
-    nav ul.open{transform:translateX(0);}
-    .nav-toggle{display:flex;}
-    .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-    .nav-toggle.open span:nth-child(2){opacity:0;}
-    .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
-    section{padding:5rem 6%;}
-    .hero h1{font-size:clamp(2.4rem, 13vw, 5rem);}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deju Klubs Triumfs</title>
+    <!-- Iekļaujam modernu fontu un pamata stilu struktūru -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d4af37; /* Zelta akcents */
+            --dark-color: #1a1a1a;
+            --light-color: #f9f9f9;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+        }
+        header {
+            background-color: var(--dark-color);
+            color: #fff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .bg-dark-section {
+            background-color: var(--dark-color);
+            color: #fff;
+        }
+        h1, h2, h3 {
+            color: var(--dark-color);
+        }
+        .bg-dark-section h2, .bg-dark-section h3 {
+            color: var(--primary-color);
+        }
+        h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .style-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .style-item {
+            background: var(--dark-color);
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--primary-color);
+        }
+        blockquote {
+            font-style: italic;
+            background: #f0f0f0;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .gallery-placeholder {
+            background: #ddd;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+        footer {
+            background: var(--dark-color);
+            color: #aaa;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- ============ HEADER / NAV ============ -->
-<header id="header">
-  <a href="#hero" class="logo">
-    <img src="logo.png" alt="Logo" style="height:30px; width:auto; display:inline-block;">
-  </a>
-
-  <nav>
-    <ul id="navLinks">
-      <li><a href="#about">Par mums</a></li>
-      <li><a href="#offer">Mēs piedāvājam</a></li>
-      <li><a href="#dance types">Deju stili</a></li>
-      <li><a href="news"> Jaunumi</a></li>
-      <li><a href="#our moments">Mūsu momenti</a></li>
-      <li><a href="#contact">Kontakti</a></li>
-    </ul>
-  </nav>
-
-  <button class="nav-toggle" id="navToggle" aria-label="Izvēlne">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grain"></div>
-
-  <!-- Dancer silhouettes (signature element) -->
-  <div class="dancer-figure dancer-1">
-  <img src="Untitled_design__1_-removebg-preview.png
-    " alt="floating woman">
-</div>
-        <ellipse cx="150" cy="55" rx="26" ry="30"/>
-        <path d="M150 85c-10 18-55 35-70 75-7 18 8 30 22 18 18-30 38-48 48-58v40l-10 130c-3 14 16 18 20 4l16-118 16 118c4 14 23 10 20-4l-10-130v-40c10 10 30 28 48 58 14 12 29 0 22-18-15-40-60-57-70-75-8-10-44-10-52 0z"/>
-        <path d="M150 90c25-5 55-25 80-15 10 4 8 18-3 19-30 4-55 18-70 22z" fill-opacity="0.55"/>
-      </g>
-    </svg>
-  </div>
-  <div class="dancer-figure dancer-2">
-    <svg viewBox="0 0 220 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g fill="FF2EFF">
-        <ellipse cx="110" cy="40" rx="20" ry="23"/>
-        <path d="M110 64c-30 10-55 5-80-10-8-5-16 6-8 14 25 22 55 28 80 24l-30 90c-4 12 14 18 19 6l24-66 24 66c5 12 23 6 19-6l-30-90c25 4 55-2 80-24 8-8 0-19-8-14-25 15-50 20-80 10z"/>
-      </g>
-    </svg>
-  </div>
-
-  <div class="hero-content">
-    <span class="eyebrow">Ogre · Brīvības iela 15 · Ogres kultūras centrs</span>
-    <h1>Triumfs<em>Deju studija kopš 2000. gada</em></h1>
-    <p class="hero-sub">
-      Desmit gadu pieredze, plašākais deju stilu klāsts Latvijā un atmosfēra,
-      kurā ikviens — neatkarīgi no vecuma vai pieredzes — atrod savu ritmu,
-      pārliecību un otro ģimeni.
-    </p>
-    <div class="hero-cta">
-      <a href="#offer" class="btn btn-primary" data-ripple>Skatīt nodarbības</a>
-      <a href="#contact" class="btn btn-outline" data-ripple>Pieteikties izmēģinājumam</a>
-    </div>
-  </div>
-
-  <div class="scroll-cue">
-    <div class="line"></div>
-  </div>
-</section>
-
-<!-- ============ ABOUT ============ -->
-<section id="about">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <span class="eyebrow">Par mums</span>
-      <h2>Par deju klubu <span class="accent">"Triumfs"</span></h2>
-      <p>
-        Desmit gadus apvienojam dažāda vecuma un stila dejotājus — sniedzot
-        iespējas izaugsmei, pašizpausmei un neaizmirstamiem piedzīvojumiem
-        ikvienam, neatkarīgi no vecuma vai pieredzes.
-      </p>
-      <div class="divider"></div>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p class="lead">
-          "Aizraušanās ar dejām ir ne tikai populāra, bet arī ļoti labvēlīga
-          un veselīga mūsdienu modes tendence."
-        </p>
-        <p>
-          Deju klubs <strong>"Triumfs"</strong> jau desmit gadus veiksmīgi
-          darbojas Latvijas deju industrijas tirgū, apvienojot dažāda vecuma
-          un deju stila cienītājus, sniedzot iespējas personības estētiskās
-          un fiziskās izaugsmes veicināšanai, pašizaugsmei, panākumiem bagātas
-          karjeras veidošanai deju sporta vai šovbiznesa jomā, kā arī
-          patīkamai, izglītojošai, veselīgai atpūtai un neaizmirstamu iespaidu
-          gūšanai ikvienam.
-        </p>
-        <p>
-          Dejas palīdz izveidot slaidu, lokanu, harmoniski attīstītu ķermeni,
-          atbrīvoties no liekajiem kilogramiem, stiprināt fizisko izturību,
-          attīstīt eleganci un prasmi graciozi kustēties. Deju studija
-          <strong>"Triumfs"</strong> ar prieku Jums atklās daudzveidīgo un
-          krāšņo deju pasauli, kas ievērojami mainīs Jūsu dzīvi, dāvās daudz
-          jaunu draugu un atklās vēl nebijušas iespējas.
-        </p>
-        <p>
-          Mēs attīstāmies, ar katru gadu paplašinot piedāvājumu klāstu un
-          klientu skaitu, neaizmirstot par sabiedrības un dejotāju interesēm —
-          balstoties uz uzticību, kvalitāti un draudzīgu atmosfēru.
-        </p>
-
-        <!-- Leadership -->
-        <div class="leader-card reveal">
-          <div class="leader-name">Jekaterina Pihtina</div>
-          <div class="leader-role">Direktore · Horeogrāfe · Trenere</div>
-          <p>
-            Baltijas Starptautiskās Akadēmijas absolvente ar bakalaura grādu
-            mākslas zinībās un kultūras menedžmentā un maģistra grādu
-            ekonomikā. Bijusī Latvijas izlases dejotāja un Latvijas Sporta
-            Deju Federācijas sertificēta trenere.
-          </p>
-          <p style="margin-top:1rem;">
-            2000. gadā izveidoja Sporta deju klubu "Triumfs". 2004. gadā
-            "Triumfs" kļuva par pirmo deju klubu Latvijā, kas savā piedāvājumā
-            apvienoja dažādus deju stilus — popularizējot tos ar koncertiem un
-            festivāliem prestižākajās Latvijas deju skatuvēs.
-          </p>
+    <!-- NAVIGĀCIJA -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Triumfs</div>
+                <ul>
+                    <li><a href="#par-mums">Par Mums</a></li>
+                    <li><a href="#mes-piedavajam">Mēs Piedāvājam</a></li>
+                    <li><a href="#galerija">Galerija</a></li>
+                </ul>
+            </nav>
         </div>
-      </div>
+    </header>
 
-      <div class="about-stats">
-        <div class="stat-card reveal reveal-delay-1">
-          <div class="stat-number">10+</div>
-          <div class="stat-label">Gadu pieredze Latvijas deju industrijā</div>
+    <!-- 1. LIELĀ SADAĻA: PAR MUMS -->
+    <main>
+        <section id="par-mums" class="section">
+            <div class="container">
+                <h2>Par mums</h2>
+                <p><strong>Deju klubs “Triumfs”</strong> jau 10 gadus apvieno dažādu paaudžu un stilu dejotājus. Mēs piedāvājam kvalitatīvas nodarbības draudzīgā atmosfērā — gan tiem, kas vēlas veidot profesionālu karjeru deju sportā un šovbiznesā, gan tiem, kas meklē veselīgu, aktīvu atpūtu un jaunas emocijas.</p>
+                <p>Mūsu durvis ir atvērtas ikvienam, neatkarīgi no vecuma vai sagatavotības līmeņa!</p>
+
+                <h3>Kāpēc izvēlēties mūs?</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>Fiziskā un estētiskā izaugsme</h4>
+                        <p>Dejas palīdz iegūt slaidu, lokanu ķermeni, uzlabo stāju, fizisko izturību un kustību grāciju.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Profesionāli pasniedzēji</h4>
+                        <p>Pieredzējušu treneru komanda, kas palīdzēs sasniegt tavus mērķus.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Kopiena</h4>
+                        <p>Iespēja satikt domubiedrus un atklāt krāšņu deju pasauli, kas mainīs tavu ikdienu.</p>
+                    </div>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- VADĪTĀJI -->
+                <h3>Vadītāji</h3>
+                <div class="card">
+                    <h4>Jekaterina Pihtina – Kluba dibinātāja un direktore</h4>
+                    <p>Jekaterina ir bijusī Latvijas izlases dejotāja, tagad – Latvijas Sporta Deju Federācijas sertificēta trenere. Ieguvusi bakalaura grādu mākslas zinībās un kultūras menedžmentā, kā arī maģistra grādu ekonomikā.</p>
+                    <p>Sporta deju klubu “Triumfs” Jekaterina nodibināja, un viņas vadībā 2004. gadā klubs kļuva par pirmo Latvijā, kas atteicās no viena stila specializācijas un apvienoja visdažādākos deju virzienus.</p>
+                    
+                    <h5>Uzstādot augstus kvalitātes standartus, Jekaterina savā darbā nodrošina:</h5>
+                    <ul>
+                        <li><strong>Profesionālu līmeni:</strong> Izcilu koncertu un deju festivālu organizēšanu uz prestižākajām Latvijas skatuvēm.</li>
+                        <li><strong>Radošu pieeju:</strong> Oriģinālu deju uzvedumu horeogrāfiju un perfektu stila izkopšanu.</li>
+                        <li><strong>Papildu atbalstu:</strong> Klientiem tiek piedāvāta arī dejotāja tēla (imidža) izveide, tērpu modelēšana un šūšana.</li>
+                    </ul>
+                    <blockquote>
+                        "Jekaterinas Pihtinas vadībā klubs jau 10 gadus ir kļuvis par atpazīstamu kvalitātes zīmi Latvijas deju industrijā, izceļoties ar augstu dejotāju meistarību un siltu, draudzīgu atmosfēru."
+                    </blockquote>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- NODARBĪBU SARAKSTS -->
+                <h3>Nodarbību saraksts</h3>
+                <div class="card">
+                    <p><em>Nodarbību grafiks šobrīd tiek atjaunināts. Lūdzu, sazinieties ar administrāciju par aktuālajiem laikiem!</em></p>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- CENAS -->
+                <h3>Cenas</h3>
+                <div class="card">
+                    <p><em>Cenrādis un abonementu veidi šobrīd tiek precizēti. Sīkākai informācijai zvaniet uz norādīto tālruni.</em></p>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- NOTEIKUMI -->
+                <h3>Noteikumi</h3>
+                <div class="card">
+                    <h4>Iekšējās kārtības noteikumi</h4>
+                    <ol>
+                        <li>Dejotājam uz nodarbību jāierodas laicīgi (ne vēlāk kā 10 minūtes pirms nodarbības sākuma).</li>
+                        <li>Ieeja deju zālēs virsdrēbēs un bez maiņas apaviem ir stingri aizliegta.</li>
+                        <li>Nodarbības ilgums: 55 min.</li>
+                        <li>Nodarbības laikā dejotājiem ir aizliegts sarunāties savā starpā vai pa mobilajiem tālruņiem, kā arī košļāt košļājamo gumiju vai konfektes. Mobilajiem tālruņiem jābūt ieslēgtiem klusuma režīmā.</li>
+                        <li>Visas nodarbības ir slēgtas trešajām personām (nodarbību laikā telpā nedrīkst atrasties nepiederošas personas). Izņēmums ir nodarbības bērniem vecumā no 3,5 līdz 6 gadiem, kā arī atvērtās nodarbības, kas notiek katra mēneša pirmajā nedēļā.</li>
+                        <li>Ja nodarbību laikā klāt ir trešās personas, tām ir stingri aizliegts skaļi sarunāties savā starpā vai pa mobilajiem tālruņiem, kā arī izteikt jebkādus komentārus dejotājiem nodarbības laikā.</li>
+                        <li>Ja dejotājs kāda iemesla dēļ nevar ierasties uz nodarbību, viņam par to jāpaziņo kluba direktoram vai administratoram pa tālruni, ar īsziņu vai e-pastu ne vēlāk kā divas stundas pirms nodarbības sākuma.</li>
+                        <li>Apmaksa par nodarbībām un abonementu reģistrācija tiek veikta pirms nodarbību sākuma. Grupām ar ikmēneša maksājumu sistēmu maksājums par kārtējo mēnesi jāveic līdz attiecīgā mēneša 15. datumam. Ja kāda iemesla dēļ dejotājs nevar samaksāt līdz minētajam datumam, dejotājam vai viņa vecākiem ir jāvienojas par individuālu maksājumu grafiku ar kluba direktoru.</li>
+                        <li>Abonements ir derīgs noteiktam nodarbību skaitam (8 nodarbībām). Izmēģinājuma nodarbība ir iekļauta abonementa cenā tikai tad, ja abonements tiek iegādāts tajā pašā dienā. Abonements ir personīgs, un to nedrīkst nodot citai personai!</li>
+                        <li>Klientam tiek piesaistīts konkrēts laiks, diena un grupa, un vienas nodarbības nomaiņa pret citu ir iespējama tikai ar iepriekšēju administrācijas saskaņojumu (ja grupā ir brīvas vietas).</li>
+                        <li>Ja horeogrāfs nav ieradies attaisnojoša iemesla dēļ (atvaļinājums, slimība, studijas pamiešana u.c.), administrācijai ir tiesības nodrošināt līdzvērtīgu aizvietošanu.</li>
+                        <li>Administrācija patur tiesības veikt izmaiņas pašreizējā nodarbību grafikā, kā arī ieviest jaunus noteikumus un mainīt esošos.</li>
+                        <li>Telpu, inventāra, aprīkojuma un mehānismu bojājumu gadījumā vainīgajam ir pienākums atlīdzināt klubam visus radītos zaudējumus.</li>
+                        <li>Apmaksa par izmēģinājuma nodarbību vai abonementa iegāde apliecina klienta piekrišanu visiem minētajiem deju kluba TRIUMFS noteikumiem un uzliek klientam pienākumu tos ievērot. Noteikumu pārkāpšanas gadījumā administrācija patur tiesības atteikt pakalpojumu sniegšanu un neatgriezt maksu par abonementu un izmēģinājuma nodarbību.</li>
+                    </ol>
+
+                    <h4>Prasības treniņu apģērbam</h4>
+                    <p>Lai nodarbības laikā justos ērti, ir svarīgi izvēlēties pareizo apģērbu. Gērbieties nodarbībām ērtā, elastīgā apģērbā. Ideāli piemērotas ir brīvas, ērtas pusgarās bikses (bapšas), elastīgas bikses, tops, krekliņš uz lencītēm, pieguļošs T-krekls vai bodijs (vingrošanas triko).</p>
+                    <ul>
+                        <li><strong>Etniskajām, džeza un modernajām dejām:</strong> džeza apavi, baleta čības vai neslīdošas zeķes.</li>
+                        <li><strong>Sarīkojumu (sporta) dejām, salsai, Brodvejas džezam un Brazīlijas sambai:</strong> speciālas deju kurpes.</li>
+                        <li><strong>Hip-hopam, kluba dejām, aerobikai un karsējmeiteņu programmai:</strong> sporta apavi (kedas vai botas).</li>
+                    </ul>
+                    <div class="alert-box">
+                        <strong>Svarīgi:</strong> Neaizmirstiet paņemt līdzi pudeli ūdens. Enerģiskie ritmi liks jums svīst, tāpēc ir nepieciešams atjaunot šķidruma daudzumu organismā.
+                    </div>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- MŪSU SASNIEGUMI -->
+                <h3>Mūsu sasniegumi</h3>
+                <div class="card">
+                    <p><em>Informācija par kluba godalgām un sasniegumiem tiks papildināta.</em></p>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+                <!-- KONTAKTI -->
+                <h3>Kontakti</h3>
+                <div class="card">
+                    <p><strong>Tālrunis:</strong> +371 29264995</p>
+                    <p><strong>E-pasts:</strong> <a href="mailto:info@triumfsdance.lv">info@triumfsdance.lv</a></p>
+                    <p><strong>Adrese:</strong> Ogre, Brīvības iela 15, Ogres kultūras centrs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. LIELĀ SADAĻA: MĒS PIEDĀVĀJAM -->
+        <section id="mes-piedavajam" class="section bg-dark-section">
+            <div class="container">
+                <h2>Mēs piedāvājam</h2>
+                
+                <!-- DEJU STILI -->
+                <h3>Deju stili</h3>
+                <p>Nodarbības bērniem, pusaudžiem un pieaugušajiem — grupās un individuāli:</p>
+                <div class="style-list">
+                    <div class="style-item">Baby dance</div>
+                    <div class="style-item">Sporta dejas</div>
+                    <div class="style-item">Balles dejas pieaugušajiem</div>
+                    <div class="style-item">Salsa un Latina</div>
+                    <div class="style-item">Kāzu deja</div>
+                    <div class="style-item">Brodvejs un džezs</div>
+                    <div class="style-item">Austrumu un čigānu dejas</div>
+                    <div class="style-item">Hiphops / Streetdance</div>
+                    <div class="style-item">Striplastika</div>
+                    <div class="style-item">Karsējmeitenes</div>
+                    <div class="style-item">Popdance</div>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid var(--primary-color);">
+
+                <!-- DEJU ŠOVI -->
+                <h3>Deju šovi un pasākumu programmas</h3>
+                <p>Šova deju grupa “Triumfs” jau vairāk nekā 5 gadus pārsteidz Latvijas skatītājus ar krāšņām programmām festivālos, korporatīvajos pasākumos, prezentācijās un privātās svinībās.</p>
+                
+                <h5>Mēs piedāvājam gan atsevišķus deju uzvedumus, gan pilnas koncertprogrammas:</h5>
+                <ul>
+                    <li><strong>Elastīgs garums:</strong> no 15 minūtēm (5–7 priekšnesumi non-stop režīmā) līdz 1 stundai.</li>
+                    <li><strong>Sastāvs:</strong> no 4 līdz 12 dejotājiem.</li>
+                    <li><strong>Daudzveidība:</strong> katrs priekšnesums tiek izpildīts citos tērpos, garantējot jaunas emocijas un neaizmirstamu enerģiju.</li>
+                </ul>
+
+                <h4>Mūsu šovu repertuārs:</h4>
+                <div class="grid-3" style="color: #333;">
+                    <div class="card"><strong>Venetian Carnival</strong> – grezns mīlas stāsts vēsturiskā Venēcijas masku karnevāla noskaņās.</div>
+                    <div class="card"><strong>Viva la Cuba</strong> – karstasinīgi ritmi, krāšņi tērpi un Karību salu dzīvesprieks.</div>
+                    <div class="card"><strong>Ocean Magic</strong> – godalgots, pasakains zemūdens pasaules šovs ar hipnotizējošu horeogrāfiju.</div>
+                    <div class="card"><strong>Brazīļu šovs</strong> – Rio karnevāla temperaments, samba un Sambas karalienes izvirzīšana viesu vidū.</div>
+                    <div class="card"><strong>Čigānu šovs</strong> – maģiska mūzika, strauji plīvojoši svārki un Dienvidindijas ugunīgums.</div>
+                    <div class="card"><strong>Indijas Bollywood šovs</strong> – spilgts mīlas stāsts, eksotiskas Dievu pozas un indiešu kino šarms.</div>
+                    <div class="card"><strong>Austrumu dejas</strong> – jutekliskas vēderdejas, noslēpumains rituāls ar svecēm un meistarklase viesiem.</div>
+                    <div class="card"><strong>Burleskas un Kabarē šovi</strong> – Parīzes bohēma, mežģīnes un flirts modernu popmūzikas hītu pavadījumā.</div>
+                    <div class="card"><strong>Afrikāņu šovs</strong> – mežonīgi bungu ritmi, rituāla dejas un iespaidīgi akrobātiskie triki.</div>
+                    <div class="card"><strong>Karsējmeiteņu šovs</strong> – enerģisks hip-hop, disco un akrobātikas mikss, kas izcels jebkuru sporta turnīru.</div>
+                </div>
+
+                <p style="margin-top: 30px; font-size: 18px; color: var(--primary-color);">
+                    <strong>Deju šovu var pasūtīt, zvanot pa tālruni: (+371) 29264995</strong>
+                </p>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid var(--primary-color);">
+
+                <!-- RAIDERS -->
+                <h3>Šova deju grupas “TRIUMFS” raiders</h3>
+                <div class="card" style="color: #333;">
+                    <ul>
+                        <li><strong>Grimēšanas istaba:</strong> Aizslēdzama un atrodas blakus uzstāšanās laukumam. Aprīkota ar spoguli, galdu, krēsliem, nodrošināta ar minerālūdeni un tēju. Istabas ietilpībai jāatbilst ielūgto dejotāju skaitam.</li>
+                        <li><strong>Uzstāšanās laukums:</strong> Izmēri nedrīkst būt mazāki par 5 metriem garumā un 3 metriem platumā. Šova deju grupa neuzstājas uz smiltīm, zāles vai uz lietus salijušiem laukumiem un slidenām grīdu virsmām.</li>
+                        <li><strong>Aparatūra:</strong> Atskaņošanas aparatūra – CD formātā. Vēlams nodrošināt ģenerālmēģinājuma iespēju ar skaņas un gaismas režisora klātbūtni, tehniskās aparatūras pieskaņošanu šova programmas prasībām.</li>
+                        <li><strong>Apsardze:</strong> Dejotāju drošības garantija viesizrādes laikā.</li>
+                        <li><strong>Reklāma:</strong> Ja pasūtītāja reklāmā tiek izmantoti šova deju grupas “TRIUMFS” foto un video materiāli, obligāti ir jābūt norādītam deju studijas “TRIUMFS” logo uz afišām, bukletiem, flaieriem u.t.t., un grupas nosaukumam reklāmā masu medijos.</li>
+                    </ul>
+                </div>
+
+                <hr style="margin: 40px 0; border: 0; border-top: 1px solid var(--primary-color);">
+
+                <!-- TĒRPU NOMA un PAPILDPAKALPOJUMI -->
+                <h3>Tērpu noma & Papildpakalpojumi</h3>
+                <div class="grid-3" style="color: #333;">
+                    <div class="card">
+                        <h4>Tērpu noma</h4>
+                        <p>Informācija un katalogs tiks papildināts.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Fotosesijas</h4>
+                        <p>Skatuves un stilizēta fotosesija.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Meistarklases</h4>
+                        <p>Skatuves make-up meistarklases.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. LIELĀ SADAĻA: GALERIJA -->
+        <section id="galerija" class="section">
+            <div class="container">
+                <h2>Galerija</h2>
+                <p>Šeit tiks izvietotas bildes un video materiāli no nodarbībām un pasākumiem.</p>
+                <div class="grid-3">
+                    <div class="gallery-placeholder">Foto vieta 1</div>
+                    <div class="gallery-placeholder">Foto vieta 2</div>
+                    <div class="gallery-placeholder">Foto vieta 3</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- KĀJENE -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Deju Klubs TRIUMFS. Visas tiesības aizsargātas.</p>
         </div>
-        <div class="stat-card reveal reveal-delay-2">
-          <div class="stat-number">12+</div>
-          <div class="stat-label">Dažādi deju stili — no sporta dejām līdz hip-hopam</div>
-        </div>
-        <div class="stat-card reveal reveal-delay-3">
-          <div class="stat-number">15</div>
-          <div class="stat-label">Dejotājas šova deju grupas "Triumfs" pamatsastāvā</div>
-        </div>
-        <div class="stat-card reveal reveal-delay-4">
-          <div class="stat-number">1.</div>
-          <div class="stat-label">Pirmais multistilu deju klubs Latvijā (2004)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ OFFER ("Mēs piedāvājam") ============ -->
-<section id="offer">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <span class="eyebrow">Mēs piedāvājam</span>
-      <h2>Deju kursi <span class="accent">visiem vecumiem</span></h2>
-      <p>
-        Grupu un individuālās nodarbības bērniem, pusaudžiem un pieaugušajiem —
-        izvēlies stilu, kas runā ar Tavu sirdi.
-      </p>
-      <div class="divider"></div>
-    </div>
-
-    <div class="offer-grid">
-      <div class="offer-card reveal">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6m0 0a4 4 0 100 8 4 4 0 000-8zm0 8v6m-6-3h12" stroke-linecap="round"/></svg>
-        <h4>Sporta dejas</h4>
-        <p>Klasiskā un latīņamerikas programma — tehnika, elegance un sacensību gars.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-1">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M5 21v-2a7 7 0 0114 0v2" stroke-linecap="round"/></svg>
-        <h4>Balles dejas pieaugušajiem</h4>
-        <p>Valsis, tango, foxtrot un citi klasiskie soļi atslābinātā vidē.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-2">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 7h7l-5.5 4.5L17 21l-5-3.5L7 21l1.5-7.5L3 9h7z" stroke-linejoin="round"/></svg>
-        <h4>Kāzu dejas</h4>
-        <p>Individuāla horeogrāfija pārim — lai pirmā kāzu deja kļūst par neaizmirstamu mirkli.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-3">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18V6a2 2 0 012-2h8l6 6v8a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 4v6h6"/></svg>
-        <h4>Brodvejas džezs</h4>
-        <p>Ekspresīvs, teatrāls stils ar fokusu uz kompozīciju un emocijām.</p>
-      </div>
-      <div class="offer-card reveal">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm0 4v5l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4>Austrumu dejas</h4>
-        <p>Plūstoša grācija un austrumu deju tehnika visiem meistarības līmeņiem.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-1">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12c0-5 4-9 9-9s9 4 9 9-4 9-9 9-9-4-9-9z"/><path d="M8 9c1 2 3 3 4 3s3-1 4-3M8 15c1-1 3-1.5 4-1.5s3 .5 4 1.5"/></svg>
-        <h4>Čigānu dejas</h4>
-        <p>Temperamentīgas, dinamiskas kustības ar bagātīgu emocionālo izteiksmi.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-2">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <h4>Salsa</h4>
-        <p>Karibu ritmi, partnerdeja un sociāla atmosfēra katrā nodarbībā.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-3">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M5 7l7-5 7 5M5 17l7 5 7-5"/></svg>
-        <h4>Latino</h4>
-        <p>Bačata, merengue un citi karstie latīņamerikāņu stili.</p>
-      </div>
-      <div class="offer-card reveal">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" stroke-linejoin="round"/></svg>
-        <h4>Strip-plastika</h4>
-        <p>Sievišķīga plastika, pašpārliecība un grācija kustībās.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-1">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21c-4-3-8-6.5-8-11A4.5 4.5 0 0112 6a4.5 4.5 0 018 4c0 4.5-4 8-8 11z"/></svg>
-        <h4>Karsējmeiteņu programma</h4>
-        <p>Enerģiska komanddeja ar akrobātiskiem elementiem un sinhronizāciju.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-2">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 18l4-4 4 4 6-8 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <h4>Hip-hop, džezs, modernais</h4>
-        <p>Mūsdienu stili — no LA un Newstyle līdz hip-hop pamatiem.</p>
-      </div>
-      <div class="offer-card reveal reveal-delay-3">
-        <svg class="offer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6l4 2M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
-        <h4>Deju aerobika</h4>
-        <p>Kardio treniņš ritmā — forma, izturība un laba pašsajūta.</p>
-      </div>
-    </div>
-
-    <!-- Extra services -->
-    <div class="extra-services">
-      <div class="extra-pill reveal"><span class="dot"></span>Skatuves make-up meistarklases</div>
-      <div class="extra-pill reveal reveal-delay-1"><span class="dot"></span>Deju šovi svinībām un pasākumiem</div>
-      <div class="extra-pill reveal reveal-delay-2"><span class="dot"></span>Tērpu noma</div>
-      <div class="extra-pill reveal reveal-delay-3"><span class="dot"></span>Skatuves un stilizētās foto sesijas</div>
-    </div>
-
-    <!-- Teachers -->
-    <div class="section-head reveal" style="margin-top:6rem;">
-      <span class="eyebrow">Pasniedzēji</span>
-      <h2>Profesionāļi, kas <span class="accent">iedvesmo</span></h2>
-      <p>
-        Pieredzes bagāti horeogrāfi un treneri, kas regulāri papildina zināšanas
-        pasaules slavenu horeogrāfu meistarklasēs un strādā ar aktuālākajām
-        deju tehnikām.
-      </p>
-    </div>
-
-    <div class="teacher-grid">
-      <div class="teacher-card reveal">
-        <div class="teacher-photo">
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
-        </div>
-        <div class="teacher-body">
-          <h4>Jekaterina Pihtina</h4>
-          <span class="teacher-tag">Sporta, austrumu, čigānu, brazīliešu dejas, salsa</span>
-          <p>
-            Latvijas izlases dejotāja un LSDF sertificēta trenere. Apguvusi
-            klasisko deju, flamenko un strip-plastiku pie pasaulē atzītiem
-            pasniedzējiem. Šova grupas "Triumfs" horeogrāfe, režisore un
-            mākslinieciskā vadītāja.
-          </p>
-        </div>
-      </div>
-      <div class="teacher-card reveal reveal-delay-1">
-        <div class="teacher-photo">
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
-        </div>
-        <div class="teacher-body">
-          <h4>Edgars Meilands</h4>
-          <span class="teacher-tag">Hip-hop, Jazz, LA, Newstyle</span>
-          <p>
-            Sācis sporta dejās "Triumfā", attīstījis hip-hop meistarību Rīgas
-            studijā "Todes". Šovbaleta un "Most Wanted Crew" dalībnieks,
-            "Zelta talantu" konkursa pieredze.
-          </p>
-        </div>
-      </div>
-      <div class="teacher-card reveal reveal-delay-2">
-        <div class="teacher-photo">
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
-        </div>
-        <div class="teacher-body">
-          <h4>Ērika Gridņeva</h4>
-          <span class="teacher-tag">Džezs, hip-hop, LA un mūsdienu stili</span>
-          <p>
-            Dejo kopš piecu gadu vecuma, apguvusi baletu un džezu pie slaveniem
-            pasniedzējiem. Divkārtēja DS "Todes" labākās dejotājas titula
-            ieguvēja, "Jaunā Viļņa" dalībniece.
-          </p>
-        </div>
-      </div>
-      <div class="teacher-card reveal reveal-delay-3">
-        <div class="teacher-photo">
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>
-        </div>
-        <div class="teacher-body">
-          <h4>Evija Krastiņa</h4>
-          <span class="teacher-tag">Eksotiskās dejas, latino, salsa, Brodvejas džezs</span>
-          <p>
-            No tautiskām dejām un klasiskā baleta līdz šova grupas "Triumfs"
-            vadošajai solistei. Starptautisko festivālu "Karavāna" un "Baltic
-            Talants" diplomande.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Show group -->
-    <div class="show-group reveal">
-      <h3>Šova deju grupa <span>"Triumfs"</span></h3>
-      <p>
-        Piecpadsmit dejotājas ar augstu horeogrāfijas un aktiermākslas
-        meistarību — repertuārā eksotiskas tautas dejas (austrumu, Indijas,
-        Brazīlijas, Spānijas, čigānu), kā arī mūsdienu dejas, kabarē šovi un
-        džeza-moderna uzvedumi. Mūsu šovs ir jūtu fērija — teātra, mūzikas,
-        dejas un specefektu harmonisks sajaukums.
-      </p>
-      <div class="venue-tags">
-        <span class="venue-tag">Mazā Ģilde</span>
-        <span class="venue-tag">Maskavas nama koncertzāle</span>
-        <span class="venue-tag">Dzintaru koncertzāle</span>
-        <span class="venue-tag">Baltic Beach Hotel</span>
-        <span class="venue-tag">Jomas sēta</span>
-        <span class="venue-tag">Ogres Prestižs</span>
-        <span class="venue-tag">VEGAS</span>
-        <span class="venue-tag">FASHIONCLUB</span>
-        <span class="venue-tag">BIG POINT</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ NEWS ============ -->
-<section id="news">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <span class="eyebrow">Jaunumi</span>
-      <h2>Notiek <span class="accent">Triumfā</span></h2>
-      <p>
-        Sekojiet līdzi mūsu festivāliem, koncertiem un jaunajām nodarbību grupām.
-      </p>
-      <div class="divider"></div>
-    </div>
-
-    <div class="news-grid">
-      <div class="news-card reveal">
-        <div class="news-banner"></div>
-        <div class="news-body">
-          <span class="news-date">Atvērtās nodarbības</span>
-          <h4>Pirmā mēneša nedēļa — atvērtās durvis</h4>
-          <p>
-            Katra mēneša pirmajā nedēļā nodarbības ir atvērtas — vecāki un
-            interesenti var ierasties un novērot treniņu procesu klātienē.
-          </p>
-          <a class="news-link" data-ripple>Lasīt vairāk
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="news-card reveal reveal-delay-1">
-        <div class="news-banner"></div>
-        <div class="news-body">
-          <span class="news-date">Šova grupa</span>
-          <h4>Jauni uzvedumi 2026. gada sezonai</h4>
-          <p>
-            Šova deju grupa "Triumfs" turpina veidot jaunas, krāšņas
-            kompozīcijas — sajaucot austrumu, latīņamerikas un mūsdienu deju
-            stilus jaunos koncertprogrammu uzvedumos.
-          </p>
-          <a class="news-link" data-ripple>Lasīt vairāk
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="news-card reveal reveal-delay-2">
-        <div class="news-banner"></div>
-        <div class="news-body">
-          <span class="news-date">Pieteikšanās</span>
-          <h4>Izmēģinājuma nodarbība — bez maksas pirmajā dienā</h4>
-          <p>
-            Izmēģinājuma nodarbība iekļauta abonementa cenā, ja abonements tiek
-            iegādāts tajā pašā dienā. Lieliska iespēja iepazīt savu stilu un
-            pasniedzēju.
-          </p>
-          <a class="news-link" data-ripple>Lasīt vairāk
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PRACTICAL INFO (visit rules / clothing) ============ -->
-<section id="rules">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <span class="eyebrow">Praktiskā informācija</span>
-      <h2>Sagatavojies <span class="accent">treniņam</span></h2>
-      <p>Visi galvenie noteikumi un ieteikumi pirms pirmās nodarbības "Triumfā".</p>
-      <div class="divider"></div>
-    </div>
-
-    <div class="rules-grid">
-      <div class="rules-card reveal">
-        <h3>Apmeklējuma noteikumi</h3>
-        <ol>
-          <li>Ierodies nodarbībai laicīgi — ne vēlāk kā 10 minūtes pirms sākuma.</li>
-          <li>Zālē jāierodas ar maiņas apaviem, virsdrēbes nav atļautas.</li>
-          <li>Nodarbības ilgums — 55 minūtes.</li>
-          <li>Treniņa laikā lūdzam izslēgt mobilos telefonus.</li>
-          <li>Nodarbības slēgtas trešajām personām, izņemot bērnu grupas (3.5–6 g.) un atvērtās nedēļas.</li>
-          <li>Par neierašanos jāinformē administrāciju vismaz 2 stundas iepriekš.</li>
-          <li>Abonements derīgs 8 nodarbībām un ir personisks.</li>
-          <li>Izmēģinājuma nodarbība iekļauta cenā, ja abonements iegādāts tajā pašā dienā.</li>
-        </ol>
-      </div>
-      <div class="rules-card reveal reveal-delay-1">
-        <h3>Apģērbs nodarbībām</h3>
-        <ul>
-          <li>Komfortabls, elastīgs apģērbs — bridžes, tamborētas bikses, topi vai trikotāžas.</li>
-          <li>Etniskajām, džeza un moderno deju nodarbībām — džeza tūteles, baleta čības vai neslīdoši zeķes.</li>
-          <li>Balles dejām, salsai un Brodvejas džezam — speciāli deju apavi.</li>
-          <li>Hip-hopam, klubu dejām un aerobikai — sporta apavi (kreptiņi).</li>
-          <li>Neaizmirsti ūdens pudeli — enerģiskie ritmi prasa atjaunot šķidruma līmeni.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ GUESTBOOK ============ -->
-<section id="guestbook">
-  <div class="section-inner">
-    <div class="section-head reveal">
-      <span class="eyebrow">Viesu grāmata</span>
-      <h2>Dalies ar <span class="accent">savu pieredzi</span></h2>
-      <p>
-        Atstāj ierakstu — mums ir svarīgas Tavas domas un iespaidi par "Triumfu"!
-      </p>
-      <div class="divider"></div>
-    </div>
-
-    <div class="guestbook-wrap">
-      <form class="gb-form reveal" id="gbForm">
-        <label for="gbName">Vārds</label>
-        <input type="text" id="gbName" placeholder="Tavs vārds" required>
-
-        <label for="gbMessage">Ziņa</label>
-        <textarea id="gbMessage" placeholder="Tavi iespaidi par Triumfu..." required></textarea>
-
-        <button type="submit" class="btn btn-primary" data-ripple>Publicēt ierakstu</button>
-        <div id="gb-feedback">Paldies! Tavs ieraksts tika pievienots viesu grāmatai.</div>
-      </form>
-
-      <div class="gb-entries" id="gbEntries">
-        <div class="gb-entry reveal">
-          <div class="gb-entry-head">
-            <span class="gb-entry-name">Anete K.</span>
-            <span class="gb-entry-date">Šova grupas dejotāja</span>
-          </div>
-          <p>
-            "TRIUMFS" ir kā īsta ģimene — tu vienmēr tiec gaidīts, vari
-            apspriest jebkuru jautājumu ar domubiedriem un draugiem, iegūt
-            možu garastāvokli un pozitīvu enerģijas lādiņu.
-          </p>
-        </div>
-        <div class="gb-entry reveal reveal-delay-1">
-          <div class="gb-entry-head">
-            <span class="gb-entry-name">Renāte T.</span>
-            <span class="gb-entry-date">Sporta deju pāris</span>
-          </div>
-          <p>
-            Deju grupa "Triumfs" ir dinamiska komanda, kura dod spilgtu,
-            interesantu un notikumiem bagātu dzīvi — tajā pašā laikā ļaujot
-            pilnveidot sevi un apgūt jaunus stilus.
-          </p>
-        </div>
-        <div class="gb-entry reveal reveal-delay-2">
-          <div class="gb-entry-head">
-            <span class="gb-entry-name">Jekaterina I.</span>
-            <span class="gb-entry-date">Šova grupas dejotāja</span>
-          </div>
-          <p>
-            Šeit valda dvēseļu vienotība un savstarpēja sapratne. "Triumfs"
-            sniedz mums pārliecību par savām spējām, pilnveido un dod iespēju
-            kopā radīt ko tiešām fantastisku.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER / CONTACT ============ -->
-<footer id="contact">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#hero" class="logo">
-        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#0a0a0a" stroke="FF2EFF" stroke-width="2"/>
-          <path d="M50 18c-3 0-5 2.5-5 5.5S47 29 50 29s5-2.5 5-5.5S53 18 50 18z" fill="FF2EFF"/>
-          <path d="M50 30c-7 6-9 10-9 18 0 5 2 9 2 9l-8 18c-1 2 1 4 3 3l9-13 3 5v15c0 2 3 2 3 0V70l3-5 9 13c2 1 4-1 3-3l-8-18s2-4 2-9c0-8-2-12-9-18-1-1-3-1-4 0z" fill="FF2EFF"/>
-          <path d="M50 90c25-5 55-25 80-15 10 4 8 18-3 19-30 4-55 18-70 22z" fill="FF2EFF" fill-opacity="0.55"/>
-        </svg>
-        TRIUMF<span>S</span>
-      </a>
-      <p>
-        Deju klubs "Triumfs" — plašākais deju stilu klāsts Ogrē jau kopš
-        2000. gada. Sporta dejas, šova grupa, kāzu dejas un meistarklases
-        visiem vecumiem.
-      </p>
-      <div class="socials">
-        <a href="#" class="social-btn" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v2h2.8L16 14.9h-2.3v7A10 10 0 0022 12z"/></svg>
-        </a>
-        <a href="https://instagram.com/triumfsdance" target="_blank" class="social-btn" aria-label="Instagram">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="2" y="2" width="20" height="20" rx="5"/>
-    <circle cx="12" cy="12" r="4"/>
-    <circle cx="17.5" cy="6.5" r="1"/>
-  </svg>
-</a>
-        <a href="#" class="social-btn" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h5>Sadaļas</h5>
-      <ul>
-        <li><a href="#about">Par mums</a></li>
-        <li><a href="#offer">Piedāvājums</a></li>
-        <li><a href="#news">Jaunumi</a></li>
-        <li><a href="#guestbook">Viesu grāmata</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h5>Kontakti</h5>
-      <p>
-        Brīvības iela 15<br>
-        Ogres kultūras centrs<br>
-        Ogre, Latvija
-      </p>
-      <p style="margin-top:1rem;">
-        Tel: +371 29264995<br>
-        info@triumfsdance.lv
-      </p>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <span>&copy; 2026 Deju klubs "Triumfs". Visas tiesības aizsargātas.</span>
-    <span>Dejo. Iedvesmojies. <span>Uzvari.</span></span>
-  </div>
-</footer>
-
-<!-- Back to top -->
-<button class="to-top" id="toTop" aria-label="Atpakaļ uz augšu">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-
-<script>
-  // Sticky header on scroll
-  const header = document.getElementById('header');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-    document.getElementById('toTop').classList.toggle('show', window.scrollY > 600);
-  });
-
-  // Mobile nav toggle
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('open');
-    navLinks.classList.toggle('open');
-  });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    navToggle.classList.remove('open');
-    navLinks.classList.remove('open');
-  }));
-
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  revealEls.forEach(el => observer.observe(el));
-
-  // Ripple effect on buttons
-  document.querySelectorAll('[data-ripple]').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const ripple = document.createElement('span');
-      ripple.className = 'ripple';
-      const size = Math.max(rect.width, rect.height);
-      ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-      ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-      this.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 650);
-    });
-  });
-
-  // Back to top
-  document.getElementById('toTop').addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Guestbook form
-  const gbForm = document.getElementById('gbForm');
-  const gbEntries = document.getElementById('gbEntries');
-  const gbFeedback = document.getElementById('gb-feedback');
-  gbForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('gbName').value.trim();
-    const message = document.getElementById('gbMessage').value.trim();
-    if (!name || !message) return;
-
-    const entry = document.createElement('div');
-    entry.className = 'gb-entry reveal visible';
-    entry.innerHTML = `
-      <div class="gb-entry-head">
-        <span class="gb-entry-name">${name}</span>
-        <span class="gb-entry-date">Tagad</span>
-      </div>
-      <p>${message}</p>
-    `;
-    gbEntries.insertBefore(entry, gbEntries.firstChild);
-
-    gbFeedback.classList.add('show');
-    setTimeout(() => gbFeedback.classList.remove('show'), 3000);
-
-    gbForm.reset();
-  });
-</script>
+    </footer>
 
 </body>
 </html>
