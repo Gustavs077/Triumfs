@@ -27,9 +27,9 @@
     --line: rgba(214,34,122,.22);
     --maxw: 1240px;
     /* Logo izmērs — nomaini šo vienu skaitli, ja gribi lielāku/mazāku logo */
-    --logo-h: 140px;
-    --logo-h-scrolled: 88px;
-    --logo-h-mobile: 72px;
+    --logo-h: 175px;
+    --logo-h-scrolled: 105px;
+    --logo-h-mobile: 88px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -79,9 +79,6 @@
   }
   section{position:relative;padding:96px 0;scroll-margin-top:calc(var(--logo-h) + 40px);}
   .hero{scroll-margin-top:0;}
-  /* Ciešāka pāreja starp "Vadītāja" un "Prese" sekcijām */
-  .about-section{padding-bottom:40px;}
-  .press-section{padding-top:40px;}
 
   /* ===== NAV ===== */
   header{
@@ -164,7 +161,9 @@
     display:flex;
     align-items:center;
     position:relative;
-    padding-top:120px;
+    /* atkāpe aug līdzi logo, lai galvene neaizsegtu tekstu */
+    padding-top:calc(var(--logo-h) + 70px);
+    padding-bottom:40px;
     overflow:hidden;
   }
   .hero-bg{
@@ -276,6 +275,24 @@
     transform:translateY(-6px) scale(1.02);
     box-shadow:0 30px 60px rgba(214,34,122,.25), 0 0 0 1px rgba(214,34,122,.35);
   }
+  /* zelta zīmogs kolāžas vidū */
+  .hero-collage img.hero-seal{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:clamp(115px,13vw,175px);
+    height:auto;
+    max-width:38%;
+    z-index:3;
+    pointer-events:none;
+    border:0;
+    border-radius:0;
+    box-shadow:none;
+    filter:drop-shadow(0 10px 26px rgba(0,0,0,.65));
+  }
+  /* zīmogam nepiemēro kolāžas bilžu efektus */
+  .hero-collage img.hero-seal:hover{transform:translate(-50%,-50%);box-shadow:none;}
+
   .hero-collage .tall{grid-row:span 2;}
   .hero-collage .offset{transform:translateY(36px);}
   .hero-collage .offset:hover{transform:translateY(30px) scale(1.02);}
@@ -574,27 +591,12 @@
   /* gallery */
   .gallery-grid{
     display:grid;grid-template-columns:repeat(8,1fr);grid-auto-rows:120px;gap:8px;
-    margin-top:44px;
   }
   .gallery-grid img{
     width:100%;height:100%;object-fit:cover;border-radius:2px;cursor:pointer;
     transition:transform .3s ease, filter .3s ease;filter:saturate(1) brightness(.92);
   }
   .gallery-grid img:hover{transform:scale(1.04);filter:saturate(1.15) brightness(1);z-index:2;position:relative;}
-  /* mozaīkas izmēri — kolonnas × rindas */
-  .g-2x2{grid-column:span 2;grid-row:span 2;}
-  .g-2x1{grid-column:span 2;grid-row:span 1;}
-  .g-3x2{grid-column:span 3;grid-row:span 2;}
-  .g-4x2{grid-column:span 4;grid-row:span 2;}
-  .g-2x3{grid-column:span 2;grid-row:span 3;}
-  /* tukšie vietturi, kamēr bildes nav pievienotas */
-  .g-empty{
-    border:1px dashed var(--line);border-radius:2px;
-    background:rgba(245,240,242,.03);
-    display:flex;align-items:center;justify-content:center;
-    color:var(--muted);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
-    text-align:center;padding:8px;
-  }
 
   /* schedule */
   .schedule-frame{
@@ -619,9 +621,7 @@
   /* contact */
   /* Kontaktu sadaļa pacelta uz augšu — mazāks atstatums virs tās */
   #kontakti{padding-top:56px;}
-  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:44px;align-items:stretch;margin-top:0;}
-  /* virsraksts tagad ir kolonnā — mazliet vairāk gaisa zem tā */
-  .contact-info .section-title{margin-bottom:30px;}
+  .contact-grid{display:grid;grid-template-columns:0.95fr 1.15fr 0.9fr;gap:38px;align-items:start;margin-top:28px;}
   .contact-info h3{margin-bottom:20px;}
   .contact-line{display:flex;gap:12px;margin-bottom:16px;color:var(--muted);align-items:center;font-size:1rem;}
   .contact-line .ci-ico{font-size:1.15rem;line-height:1.2;flex:none;}
@@ -638,30 +638,17 @@
   .social-btn svg{width:21px;height:21px;}
   .social-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold);transform:translateY(-2px);}
 
-  /* === MŪSU TELPAS — bilžu josla pilnā platumā zem info+kartes === */
-  .studio-photos{
-    display:grid;
-    grid-template-columns:repeat(12,1fr);
-    gap:12px;
-    margin-top:52px;
+  /* vieta bildēm labajā pusē */
+  .contact-photos{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .photo-slot{
+    position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px;
+    border:1px dashed var(--line);background:rgba(245,240,242,.03);
+    display:flex;align-items:center;justify-content:center;
   }
-  .studio-photos .sp{
-    position:relative;overflow:hidden;border-radius:4px;
-    border:1px solid var(--line);background:rgba(245,240,242,.03);
+  .photo-slot span{
+    color:var(--muted);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
   }
-  .studio-photos .sp img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    filter:saturate(.95) brightness(.93);
-    transition:transform .45s ease, filter .45s ease;
-  }
-  .studio-photos .sp:hover img{transform:scale(1.05);filter:saturate(1.1) brightness(1);}
-  /* Platās (ainavas) bildes — 4 kolonnas, 4:3 */
-  .sp-wide{grid-column:span 4;aspect-ratio:4/3;}
-  /* Vertikālās bildes — 3 kolonnas, 3:4 */
-  .sp-tall{grid-column:span 3;aspect-ratio:3/4;}
-  .studio-photos-label{
-    margin-top:46px;text-align:center;
-  }
+  .photo-slot img{width:100%;height:100%;object-fit:cover;}
   .contact-info a{color:var(--gold-light);transition:color .2s;}
   .contact-info a:hover{color:var(--gold);}
   .map-box{
@@ -774,36 +761,16 @@
     .show-grid{grid-template-columns:repeat(2,1fr);}
     .booking-box{grid-template-columns:1fr;}
     .gallery-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:90px;}
-    .g-4x2{grid-column:span 4;grid-row:span 2;}
-    .g-3x2{grid-column:span 2;grid-row:span 2;}
-    .g-2x2{grid-column:span 2;grid-row:span 2;}
-    .g-2x1{grid-column:span 2;grid-row:span 1;}
-    .g-2x3{grid-column:span 2;grid-row:span 3;}
     .contact-grid{grid-template-columns:1fr;gap:34px;}
-    /* Telpu bildes: 6 kolonnas — platās pa 2 rindā, vertikālās pa 2 rindā */
-    .studio-photos{grid-template-columns:repeat(6,1fr);gap:10px;margin-top:40px;}
-    .sp-wide{grid-column:span 3;}
-    .sp-tall{grid-column:span 3;}
+    .contact-photos{grid-template-columns:repeat(4,1fr);}
   }
   @media (max-width:640px){
     :root{--logo-h:var(--logo-h-mobile);--logo-h-scrolled:60px;}
     .nav-links{font-size:.95rem;letter-spacing:.07em;}
     section{padding:64px 0;}
-    .about-section{padding-bottom:28px;}
-    .press-section{padding-top:28px;}
     .class-row .cr-img{min-height:240px;}
     .cr-text{padding:36px 24px 44px;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:88px;gap:6px;margin-top:34px;}
-    .g-4x2{grid-column:span 2;grid-row:span 2;}
-    .g-3x2{grid-column:span 1;grid-row:span 2;}
-    .g-2x2{grid-column:span 1;grid-row:span 2;}
-    .g-2x1{grid-column:span 1;grid-row:span 1;}
-    .g-2x3{grid-column:span 1;grid-row:span 2;}
-    /* Telpu bildes uz telefona: platās pilnā platumā, vertikālās pa divām */
-    .studio-photos{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:32px;}
-    .sp-wide{grid-column:span 2;}
-    .sp-tall{grid-column:span 1;}
-    .studio-photos-label{margin-top:38px;}
+    .gallery-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:78px;}
   }
 </style>
 </head>
@@ -835,7 +802,6 @@
       <li><a href="#piedavajam">Piedāvājam</a></li>
       <li><a href="#sovs">Deju šovs</a></li>
       <li><a href="#grafiks">Nodarbību grafiks</a></li>
-      <li><a href="#galerija">Galerija</a></li>
       <li><a href="#kontakti">Kontakti</a></li>
     </ul>
     <button class="burger" id="burger" aria-label="Izvēlne">☰</button>
@@ -848,7 +814,7 @@
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Kopš 2000. gada · Latvijas deju industrija</span>
-      <h1><em>DEJAS</em>, kas kļūst par <em>DZĪVESVEIDU.</h1>
+      <h1><em>DEJAS</em>, kas kļūst par <em>DZĪVESVEIDU</em>.</h1>
       <p>Deju klubs "TRIUMFS" jau 25 gadus apvieno dažāda vecuma un stila dejotājus, piedāvājot personīgas pilnveides iespējas draudzīgā vidē, līdz iespaidīgiem šoviem uz profesionālās skatuves un sporta karjeras.</p>
       <div class="btn-row">
         <a href="#grafiks" class="btn-gold">Skatīt nodarbības</a>
@@ -859,12 +825,13 @@
       <img class="tall" src="https://www.triumfsdance.lv/img/dance_show/cheerleaders.jpg" alt="Venetian carnival šovs" fetchpriority="high" decoding="async">
       <img src="https://www.triumfsdance.lv/img/dance_show/cabaret.jpg" alt="Kabarē šovs" decoding="async">
       <img class="offset" src="https://www.triumfsdance.lv/img/dance_show/brazil.jpg" alt="Brazīļu šovs" decoding="async">
+      <img class="hero-seal" src="26gadi-removebg-preview%20(1).png" alt="No. 1 — 26 gadi" width="420" height="420" decoding="async">
     </div>
   </div>
 </section>
 
 <!-- ================= ABOUT / DIRECTOR ================= -->
-<section class="about-section">
+<section>
   <div class="wrap about-grid">
     <div class="director-photo">
      <img src="jekaterina-pihtina.jpg" alt="Jekaterina Pihtina, direktore" loading="lazy" decoding="async">
@@ -881,8 +848,9 @@
   </div>
 </section>
 
+
 <!-- ================= PRESS ================= -->
-<section class="press-section">
+<section>
   <div class="wrap">
     <div style="text-align:center;margin-bottom:20px;">
       <span class="eyebrow">Par mums raksta</span>
@@ -1111,12 +1079,12 @@
 <!-- ================= KONTAKTI ================= -->
 <section class="bg-wine" id="kontakti">
   <div class="wrap">
+    <span class="eyebrow">Sazinies ar mums</span>
+    <h2 class="section-title">Kontakti</h2>
     <div class="contact-grid">
 
-      <!-- === KREISĀ PUSE: virsraksts + kontaktinformācija === -->
+      <!-- === KREISĀ PUSE: kontaktinformācija === -->
       <div class="contact-info">
-        <span class="eyebrow">Sazinies ar mums</span>
-        <h2 class="section-title">Kontakti</h2>
         <div class="contact-line">
           <span class="ci-ico">&#128222;</span>
           <a href="tel:+37129264995">(+371) 29 264 995</a>
@@ -1168,72 +1136,17 @@
         </span>
       </a>
 
-    </div>
-
-    <!-- === MŪSU TELPAS: bilžu josla pilnā platumā === -->
-    <div class="studio-photos-label">
-      <span class="eyebrow">Mūsu telpas</span>
-    </div>
-    <div class="studio-photos">
-      <!-- 1. rinda: 4 vertikālas bildes (3+3+3+3 = 12) — ēka pirmā -->
-      <div class="sp sp-tall">
-        <img src="Screenshot 2026-08-07 094207.png" alt="TRIUMFS deju studijas ēka — Jaunatnes iela 6, Ogre" loading="eager" fetchpriority="high" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija3.jpeg" alt="Uzgaidāmā telpa ar spoguļiem un soliem" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija4.jpeg" alt="Vestibils ar pakaramajiem un sēdvietām" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija5.jpeg" alt="Atpūtas telpa vecākiem un bērnu stūrītis" loading="lazy" decoding="async">
-      </div>
-      <!-- 2. rinda: 3 platas bildes (4+4+4 = 12) -->
-      <div class="sp sp-wide">
-        <img src="studija.jpeg" alt="Deju zāle ar spoguļiem un kausu plauktiem" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-wide">
-        <img src="studija1.jpeg" alt="Deju zāle — parketa grīda un apgaismojums" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-wide">
-        <img src="studija2.jpeg" alt="Ģērbtuve ar soliem un pakaramajiem" loading="lazy" decoding="async">
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ================= GALERIJA ================= -->
-<section id="galerija">
-  <div class="wrap">
-    <span class="eyebrow">Mirkļi</span>
-    <h2 class="section-title">Galerija</h2>
-    <p class="lede" style="margin-bottom:8px;">Koncerti, festivāli, sacensības un ikdiena zālē. Uzklikšķini uz bildes, lai apskatītu to pilnā izmērā.</p>
-
-    <div class="gallery-grid">
-      <!--
-        KĀ PIEVIENOT BILDI:
-        Aizvieto vietturi ar img tagu, saglabājot to pašu izmēra klasi
-        (g-4x2, g-3x2, g-2x2 utt.), lai mozaīka nesajūk. Piemērs:
-
-        img class="g-4x2" src="galerija-1.jpg" alt="Apraksts"
-            loading="lazy" decoding="async"
-            onclick="openLightbox('img','galerija-1.jpg','Apraksts')"
-
-        Katra rinda = 8 kolonnas. Pašlaik: 4+2+2 / 2+3+3 / 2+2+4
+      <!-- === LABĀ PUSE: vieta 3-4 bildēm ===
+           Lai ieliktu bildi, aizvieto <span>Bilde 1</span> ar:
+           <img src="CEĻŠ/UZ/BILDI.jpg" alt="Apraksts">
       -->
+      <div class="contact-photos">
+        <div class="photo-slot"><span>Bilde 1</span></div>
+        <div class="photo-slot"><span>Bilde 2</span></div>
+        <div class="photo-slot"><span>Bilde 3</span></div>
+        <div class="photo-slot"><span>Bilde 4</span></div>
+      </div>
 
-      <div class="g-empty g-4x2"><span>Bilde 1</span></div>
-      <div class="g-empty g-2x2"><span>Bilde 2</span></div>
-      <div class="g-empty g-2x2"><span>Bilde 3</span></div>
-
-      <div class="g-empty g-2x2"><span>Bilde 4</span></div>
-      <div class="g-empty g-3x2"><span>Bilde 5</span></div>
-      <div class="g-empty g-3x2"><span>Bilde 6</span></div>
-
-      <div class="g-empty g-2x2"><span>Bilde 7</span></div>
-      <div class="g-empty g-2x2"><span>Bilde 8</span></div>
-      <div class="g-empty g-4x2"><span>Bilde 9</span></div>
     </div>
   </div>
 </section>
@@ -1346,6 +1259,7 @@
 
 </body>
 </html>
+
 
 
 
