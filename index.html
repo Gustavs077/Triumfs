@@ -511,6 +511,19 @@
   .class-row:hover .cr-img img{transform:scale(1.04);}
   /* katra otrā rinda — bilde pa kreisi */
   .class-row:nth-child(even) .cr-img{order:-1;}
+  /* placeholder — kad nodarbības bilde vēl nav pievienota */
+  .cr-img-placeholder{
+    width:100%;height:100%;min-height:460px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg, rgba(214,34,122,.07), rgba(214,34,122,.02));
+    color:var(--gold);
+    font-family:'DM Serif Display',serif;
+    font-style:italic;
+    font-size:1.3rem;
+    letter-spacing:.06em;
+    opacity:.55;
+  }
+
   /* trīs bildes vienā rindā: viena liela + divas mazākas */
   .cr-img-trio{
     display:grid;
@@ -1006,7 +1019,7 @@
   </div>
   <div class="class-rows">
 
-      <!-- BABY DANCE -->
+      <!-- 1. BABY DANCE -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Baby dance</h3>
@@ -1017,18 +1030,7 @@
         </div>
       </div>
 
-      <!-- SPORTA DEJAS -->
-      <div class="class-row">
-        <div class="cr-text">
-          <h3>Sporta dejas</h3>
-          <p>Standarta un latīņamerikas deju pāru programma ar precīzām tehniskām kustībām un sacensību elementiem.</p>
-        </div>
-        <div class="cr-img">
-          <img src="sportadejaskolaza.jpg" alt="Sporta dejas" loading="lazy" decoding="async">
-        </div>
-      </div>
-
-      <!-- BALLES DEJAS -->
+      <!-- 2. BALLES DEJAS -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Balles dejas</h3>
@@ -1039,40 +1041,31 @@
         </div>
       </div>
 
-      <!-- SALSA & LATINA -->
+      <!-- 3. SALSA & LATINO -->
       <div class="class-row">
         <div class="cr-text">
-          <h3>Salsa &amp; Latina</h3>
+          <h3>Salsa &amp; Latino</h3>
           <p>Karstasinīgi kubiešu un latīņamerikas ritmi — ātras, aizraujošas pāru dejas ar ugunīgu enerģiju.</p>
         </div>
         <div class="cr-img">
-          <img src="https://www.triumfsdance.lv/img/dance_show/cuba.jpg" alt="Salsa un Latina" loading="lazy" decoding="async">
+          <!-- Faila nosaukums: salsa.jpeg -->
+          <div class="cr-img-placeholder">salsa.jpeg</div>
         </div>
       </div>
 
-      <!-- KĀZU DEJA -->
+      <!-- 4. KĀZU DEJA -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Kāzu deja</h3>
           <p>Individuāla pāra programma, kur topošie laulātie iemācās savu pirmo deju īpašajam brīdim.</p>
         </div>
         <div class="cr-img">
-          <img src="https://www.triumfsdance.lv/img/dance_show/gipsy.jpg" alt="Kāzu deja" loading="lazy" decoding="async">
+          <!-- Faila nosaukums: kazudeja.jpeg -->
+          <div class="cr-img-placeholder">kazudeja.jpeg</div>
         </div>
       </div>
 
-      <!-- BRODVEJA DŽEZS -->
-      <div class="class-row">
-        <div class="cr-text">
-          <h3>Brodveja džezs</h3>
-          <p>Energētisks deju stils, apvienojot teatrālu izteiksmīgumu ar džeza muzikalitāti un šovbiznesa gaisotni.</p>
-        </div>
-        <div class="cr-img">
-          <img src="https://www.triumfsdance.lv/img/dance_show/burlesk.jpg" alt="Brodveja džezs" loading="lazy" decoding="async">
-        </div>
-      </div>
-
-      <!-- AUSTRUMU & ČIGĀNU DEJAS -->
+      <!-- 5. AUSTRUMU & ČIGĀNU DEJAS -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Austrumu &amp; čigānu dejas</h3>
@@ -1083,36 +1076,63 @@
         </div>
       </div>
 
-      <!-- HIP-HOP / STREETDANCE -->
+      <!-- 6. HIP-HOP -->
       <div class="class-row">
         <div class="cr-text">
-          <h3>Hip-hop / Streetdance</h3>
-          <p>Brīvas ielas dejas mūsdienu ritmā — hip-hop, streetdance un popkultūras kustības ar spēcīgu ritma izjūtu un individuālu stilu.</p>
+          <h3>Hip-hop</h3>
+          <p>Mūsdienu ielas deju kultūra — ritms, stils un pašizpausme hip-hop mūzikas pavadībā.</p>
         </div>
         <div class="cr-img">
-          <img src="hiphop.jpeg" alt="Hip-hop / Streetdance" loading="lazy" decoding="async">
+          <!-- Faila nosaukums: hiphop.jpeg -->
+          <div class="cr-img-placeholder">hiphop.jpeg</div>
         </div>
       </div>
 
-      <!-- STRIP-PLASTIKA -->
+      <!-- 7. STREETDANCE -->
+      <div class="class-row">
+        <div class="cr-text">
+          <h3>Streetdance</h3>
+          <p>Brīvas ielas dejas mūsdienu ritmā — popkultūras kustības ar spēcīgu ritma izjūtu un individuālu stilu.</p>
+        </div>
+        <div class="cr-img">
+          <!-- Faila nosaukums: streetdance.jpeg -->
+          <div class="cr-img-placeholder">streetdance.jpeg</div>
+        </div>
+      </div>
+
+      <!-- 8. STRIP-PLASTIKA -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Strip-plastika</h3>
           <p>Plastisks stils, kas attīsta sievišķību un grāciju — mīkstas, plūstošas kustības, ķermeņa kontrole un pašpārliecinātība.</p>
         </div>
         <div class="cr-img">
-          <img src="stripcolage.png" alt="Strip-plastika" loading="lazy" decoding="async">
+          <!-- Faila nosaukums: stripplastika.jpeg -->
+          <div class="cr-img-placeholder">stripplastika.jpeg</div>
         </div>
       </div>
 
-      <!-- KARSĒJMEITENES / POPDANCE -->
+      <!-- 9. KARSĒJMEITENES -->
       <div class="class-row">
         <div class="cr-text">
-          <h3>Karsējmeitenes / Popdance</h3>
-          <p>Dejas ar akrobātikas un sporta elementiem, mūsdienu populārās mūzikas dejas jautrā un enerģiskā formātā.</p>
+          <h3>Karsējmeitenes</h3>
+          <p>Dejas ar akrobātikas un sporta elementiem — dinamiska un enerģiska komandas deja ar pomponiem.</p>
         </div>
         <div class="cr-img">
-          <img src="popdance.jpeg" alt="Karsējmeitenes / Popdance" loading="lazy" decoding="async">
+          <!-- Faila nosaukums: karsejmeitenesdejas.jpeg -->
+          <div class="cr-img-placeholder">karsejmeitenesdejas.jpeg</div>
+        </div>
+      </div>
+
+      <!-- 10. POPDANCE -->
+      <div class="class-row">
+        <div class="cr-text">
+          <h3>Popdance</h3>
+          <p>Mūsdienu populārās mūzikas dejas jautrā un enerģiskā formātā — ideāli piemērotas jauniešiem.</p>
+        </div>
+        <div class="cr-img">
+          <!-- Faila nosaukums: popdance.jpeg -->
+          <div class="cr-img-placeholder">popdance.jpeg</div>
         </div>
       </div>
 
