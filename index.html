@@ -6,8 +6,8 @@
 <title>TRIUMFS — Deju studija</title>
 <meta name="description" content="Deju studija TRIUMFS — deju kursi un deju šovi jau 25 gadus Latvijā.">
 <meta name="theme-color" content="#0d0d0d">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://www.triumfsdance.lv">
@@ -164,12 +164,10 @@
 
   /* ===== HERO ===== */
   .hero{
-    /* uz ļoti gariem ekrāniem hero vairs nestiepjas — mazāk tukšuma */
     min-height:min(100vh, 940px);
     display:flex;
     align-items:center;
     position:relative;
-    /* atkāpe aug līdzi logo, lai galvene neaizsegtu tekstu */
     padding-top:calc(var(--logo-h) + 10px);
     padding-bottom:40px;
     overflow:hidden;
@@ -312,7 +310,6 @@
   }
   .director-photo img{
     width:100%;
-    /* neļauj foto izaugt milzīgam uz platiem ekrāniem */
     max-width:clamp(340px,26vw,470px);
     height:auto;
   }
@@ -661,10 +658,8 @@
   .schedule-frame p{color:var(--muted);max-width:420px;font-size:.92rem;}
 
   /* contact */
-  /* Kontaktu sadaļa pacelta uz augšu — mazāks atstatums virs tās */
   #kontakti{padding-top:56px;}
   .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:44px;align-items:stretch;margin-top:0;}
-  /* virsraksts tagad ir kolonnā — mazliet vairāk gaisa zem tā */
   .contact-info .section-title{margin-bottom:30px;}
   .contact-info h3{margin-bottom:20px;}
   .map-box{height:100%;}
@@ -683,27 +678,18 @@
   .social-btn svg{width:21px;height:21px;}
   .social-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold);transform:translateY(-2px);}
 
-  /* === MŪSU TELPAS — bilžu josla pilnā platumā zem info+kartes === */
-  .studio-photos{
-    display:grid;
-    grid-template-columns:repeat(12,1fr);
-    gap:12px;
+  /* === MŪSU TELPAS === */
+  .studio-single{
     margin-top:52px;
+    border-radius:4px;
+    overflow:hidden;
+    border:1px solid var(--line);
   }
-  .studio-photos .sp{
-    position:relative;overflow:hidden;border-radius:4px;
-    border:1px solid var(--line);background:rgba(245,240,242,.03);
+  .studio-single img{
+    width:100%;height:auto;display:block;
+    transition:transform .6s ease;
   }
-  .studio-photos .sp img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    filter:saturate(.95) brightness(.93);
-    transition:transform .45s ease, filter .45s ease;
-  }
-  .studio-photos .sp:hover img{transform:scale(1.05);filter:saturate(1.1) brightness(1);}
-  /* Platās (ainavas) bildes — 4 kolonnas, 4:3 */
-  .sp-wide{grid-column:span 4;aspect-ratio:4/3;}
-  /* Vertikālās bildes — 3 kolonnas, 3:4 */
-  .sp-tall{grid-column:span 3;aspect-ratio:3/4;}
+  .studio-single:hover img{transform:scale(1.02);}
   .studio-photos-label{
     margin-top:46px;text-align:center;
   }
@@ -785,8 +771,6 @@
   }
 
   /* ===== RESPONSIVE ===== */
-  /* zem 1120px izvēlne pārslēdzas uz nolaižamo, lai burti var būt lieli */
-  /* ===== ĻOTI PLATI EKRĀNI ===== */
   @media (min-width:1700px){
     :root{--maxw:1460px;}
     .hero-collage{height:580px;}
@@ -835,10 +819,6 @@
     .g-2x1{grid-column:span 2;grid-row:span 1;}
     .g-2x3{grid-column:span 2;grid-row:span 3;}
     .contact-grid{grid-template-columns:1fr;gap:34px;}
-    /* Telpu bildes: 6 kolonnas — platās pa 2 rindā, vertikālās pa 2 rindā */
-    .studio-photos{grid-template-columns:repeat(6,1fr);gap:10px;margin-top:40px;}
-    .sp-wide{grid-column:span 3;}
-    .sp-tall{grid-column:span 3;}
   }
   @media (max-width:640px){
     :root{--logo-h:var(--logo-h-mobile);--logo-h-scrolled:68px;}
@@ -854,10 +834,6 @@
     .g-2x2{grid-column:span 1;grid-row:span 2;}
     .g-2x1{grid-column:span 1;grid-row:span 1;}
     .g-2x3{grid-column:span 1;grid-row:span 2;}
-    /* Telpu bildes uz telefona: platās pilnā platumā, vertikālās pa divām */
-    .studio-photos{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:32px;}
-    .sp-wide{grid-column:span 2;}
-    .sp-tall{grid-column:span 1;}
     .studio-photos-label{margin-top:38px;}
   }
 </style>
@@ -1053,7 +1029,7 @@
         </div>
       </div>
 
-      <!-- 3. SALSA & LATINO -->
+      <!-- 4. SALSA & LATINO -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Salsa &amp; Latino</h3>
@@ -1065,19 +1041,18 @@
         </div>
       </div>
 
-      <!-- 4. KĀZU DEJA -->
+      <!-- 5. KĀZU DEJA -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Kāzu deja</h3>
           <p>Individuāla pāra programma, kur topošie laulātie iemācās savu pirmo deju īpašajam brīdim.</p>
         </div>
         <div class="cr-img">
-          <!-- Faila nosaukums: kazudeja.jpeg -->
-          <div class="cr-img-placeholder">kazudeja.jpeg</div>
+          <img src="kazudeja.jpeg" alt="Kāzu deja" loading="lazy" decoding="async">
         </div>
       </div>
 
-      <!-- 5. AUSTRUMU DEJAS -->
+      <!-- 6. AUSTRUMU DEJAS -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Austrumu dejas</h3>
@@ -1088,7 +1063,7 @@
         </div>
       </div>
 
-      <!-- 6. ČIGĀNU DEJAS -->
+      <!-- 7. ČIGĀNU DEJAS -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Čigānu dejas</h3>
@@ -1099,7 +1074,7 @@
         </div>
       </div>
 
-      <!-- 6. HIP-HOP -->
+      <!-- 8. HIP-HOP -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Hip-hop</h3>
@@ -1110,7 +1085,7 @@
         </div>
       </div>
 
-      <!-- 7. STREETDANCE -->
+      <!-- 9. STREETDANCE -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Streetdance</h3>
@@ -1121,31 +1096,18 @@
         </div>
       </div>
 
-      <!-- 8. STRIP-PLASTIKA -->
+      <!-- 10. STRIP-PLASTIKA -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Strip-plastika</h3>
           <p>Plastisks stils, kas attīsta sievišķību un grāciju — mīkstas, plūstošas kustības, ķermeņa kontrole un pašpārliecinātība.</p>
         </div>
         <div class="cr-img">
-          <!-- Faila nosaukums: stripplastika.jpeg -->
-          <div class="cr-img-placeholder">stripplastika.jpeg</div>
+          <img src="stripplastika.jpeg" alt="Strip-plastika deju nodarbības" loading="lazy" decoding="async">
         </div>
       </div>
 
-      <!-- 9. KARSĒJMEITENES -->
-      <div class="class-row">
-        <div class="cr-text">
-          <h3>Karsējmeitenes</h3>
-          <p>Dejas ar akrobātikas un sporta elementiem — dinamiska un enerģiska komandas deja ar pomponiem.</p>
-        </div>
-        <div class="cr-img">
-          <!-- Faila nosaukums: karsejmeitenesdejas.jpeg -->
-          <div class="cr-img-placeholder">karsejmeitenesdejas.jpeg</div>
-        </div>
-      </div>
-
-      <!-- 10. POPDANCE -->
+      <!-- 12. POPDANCE -->
       <div class="class-row">
         <div class="cr-text">
           <h3>Popdance</h3>
@@ -1278,30 +1240,8 @@
     <div class="studio-photos-label">
       <span class="eyebrow">Mūsu telpas</span>
     </div>
-    <div class="studio-photos">
-      <!-- 1. rinda: 4 vertikālas bildes (3+3+3+3 = 12) — ēka pirmā -->
-      <div class="sp sp-tall">
-        <img src="Screenshot%202026-08-07%20094207.png" alt="TRIUMFS deju studijas ēka — Jaunatnes iela 6, Ogre" loading="eager" fetchpriority="high" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija3.jpeg" alt="Uzgaidāmā telpa ar spoguļiem un soliem" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija4.jpeg" alt="Vestibils ar pakaramajiem un sēdvietām" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-tall">
-        <img src="studija5.jpeg" alt="Atpūtas telpa vecākiem un bērnu stūrītis" loading="lazy" decoding="async">
-      </div>
-      <!-- 2. rinda: 3 platas bildes (4+4+4 = 12) -->
-      <div class="sp sp-wide">
-        <img src="studija.jpeg" alt="Deju zāle ar spoguļiem un kausu plauktiem" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-wide">
-        <img src="studija1.jpeg" alt="Deju zāle — parketa grīda un apgaismojums" loading="lazy" decoding="async">
-      </div>
-      <div class="sp sp-wide">
-        <img src="studija2.jpeg" alt="Ģērbtuve ar soliem un pakaramajiem" loading="lazy" decoding="async">
-      </div>
+    <div class="studio-single">
+      <img src="studijaskolaza.jpeg" alt="Deju studijas TRIUMFS iekštelpu kolāža" loading="lazy" decoding="async">
     </div>
 
   </div>
@@ -1315,18 +1255,6 @@
     <p class="lede" style="margin-bottom:8px;">Koncerti, festivāli, sacensības un ikdiena zālē. Uzklikšķini uz bildes, lai apskatītu to pilnā izmērā.</p>
 
     <div class="gallery-grid">
-      <!--
-        KĀ PIEVIENOT BILDI:
-        Aizvieto vietturi ar img tagu, saglabājot to pašu izmēra klasi
-        (g-4x2, g-3x2, g-2x2 utt.), lai mozaīka nesajūk. Piemērs:
-
-        img class="g-4x2" src="galerija-1.jpg" alt="Apraksts"
-            loading="lazy" decoding="async"
-            onclick="openLightbox('img','galerija-1.jpg','Apraksts')"
-
-        Katra rinda = 8 kolonnas. Pašlaik: 4+2+2 / 2+3+3 / 2+2+4
-      -->
-
       <div class="g-empty g-4x2"><span>Bilde 1</span></div>
       <div class="g-empty g-2x2"><span>Bilde 2</span></div>
       <div class="g-empty g-2x2"><span>Bilde 3</span></div>
@@ -1400,7 +1328,6 @@
   const lbClose    = document.getElementById('lightboxClose');
 
   function openLightbox(type, url, caption) {
-    // Reset
     lbImg.style.display = 'none';
     lbPdf.style.display = 'none';
     lbLoader.style.display = 'block';
@@ -1424,7 +1351,6 @@
       lbPdf.src = url;
       lbPdf.onload = () => { lbLoader.style.display = 'none'; lbPdf.style.display = 'block'; };
       lbPdf.onerror = () => { lbLoader.textContent = 'PDF nav pieejams tiešsaistē. '; };
-      // Show PDF immediately, loader fades
       setTimeout(() => {
         lbLoader.style.display = 'none';
         lbPdf.style.display = 'block';
@@ -1450,6 +1376,7 @@
 
 </body>
 </html>
+
 
 
 
