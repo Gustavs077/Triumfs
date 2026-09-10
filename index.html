@@ -6,6 +6,7 @@
 <title>TRIUMFS — Deju studija</title>
 <meta name="description" content="Deju studija TRIUMFS — deju kursi un deju šovi jau 25 gadus Latvijā.">
 <meta name="theme-color" content="#0d0d0d">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -850,7 +851,7 @@
   <div class="lightbox-inner">
     <button class="lightbox-close" id="lightboxClose" aria-label="Aizvērt">&#x2715;</button>
     <img class="lightbox-content" id="lightboxImg" src="" alt="" style="display:none;">
-    <iframe class="lightbox-embed" id="lightboxPdf" src="" style="display:none;" title="Preses materiāls PDF"></iframe>
+    <iframe class="lightbox-embed" id="lightboxPdf" src="" style="display:none;" title="Preses materiāls PDF" sandbox="allow-scripts allow-same-origin"></iframe>
     <div class="lightbox-loader" id="lightboxLoader">Ielādē…</div>
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
@@ -1352,6 +1353,7 @@
 
 </body>
 </html>
+
 
 
 
