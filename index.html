@@ -639,24 +639,44 @@
   }
 
   /* schedule */
-  .schedule-frame{
-    max-width:820px;margin:50px auto 0;
-    border:2px dashed var(--gold);
-    border-radius:6px;
-    background:linear-gradient(135deg, rgba(214,34,122,.06), rgba(214,34,122,.02));
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;
-    min-height:520px;
-    padding:40px;
-    position:relative;
+  .schedule-block{margin-top:40px;}
+  .schedule-block + .schedule-block{margin-top:56px;}
+  .schedule-location{
+    display:flex;align-items:center;gap:10px;margin-bottom:18px;
   }
-  .schedule-frame img{
-    max-width:100%;max-height:640px;border-radius:4px;object-fit:contain;
+  .schedule-location .loc-pill{
+    display:inline-block;background:var(--gold);color:#fff;
+    font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    padding:4px 12px;border-radius:20px;
   }
-  .schedule-frame .placeholder-icon{
-    font-size:3rem;color:var(--gold);margin-bottom:18px;filter:drop-shadow(0 4px 10px rgba(214,34,122,.4));
+  .schedule-location h3{
+    font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--ivory);margin:0;
   }
-  .schedule-frame p{color:var(--muted);max-width:420px;font-size:.92rem;}
+  .sched-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .sched-table{
+    width:100%;border-collapse:collapse;font-size:.82rem;
+    background:rgba(245,240,242,.03);border-radius:6px;overflow:hidden;
+  }
+  .sched-table th{
+    background:linear-gradient(135deg,rgba(214,34,122,.25),rgba(214,34,122,.12));
+    color:var(--gold-light);font-weight:800;font-size:.72rem;letter-spacing:.08em;
+    text-transform:uppercase;padding:10px 14px;text-align:center;white-space:nowrap;
+    border-bottom:1px solid var(--line);
+  }
+  .sched-table th.col-day{text-align:left;}
+  .sched-table td{
+    padding:9px 14px;border-bottom:1px solid var(--line);
+    color:var(--ivory);vertical-align:middle;text-align:center;
+  }
+  .sched-table td.col-day{
+    color:var(--muted);font-weight:700;font-size:.78rem;letter-spacing:.05em;
+    text-transform:uppercase;white-space:nowrap;text-align:left;
+  }
+  .sched-table tr:last-child td{border-bottom:none;}
+  .sched-table tr:hover td{background:rgba(214,34,122,.05);}
+  .sched-table .class-name{font-weight:700;color:var(--ivory);display:block;line-height:1.3;}
+  .sched-table .class-group{font-size:.74rem;color:var(--gold-light);display:block;margin-top:2px;}
+  .sched-table td:empty{color:var(--muted);}
 
   /* contact */
   #kontakti{padding-top:56px;}
@@ -1154,9 +1174,131 @@
     <span class="eyebrow">Plāno savu nedēļu</span>
     <h2 class="section-title">Nodarbību <em>grafiks</em></h2>
     <p class="lede">Aktuālais nodarbību laiks un cenas — vienuviet.</p>
-    <div class="schedule-frame">
-      <div class="placeholder-icon">📅</div>
-      <p style="color:var(--muted);">Grafika attēls tiks pievienots šeit. Nomainiet <code style="color:var(--gold-light);">assets/grafiks.jpg</code> uz sava grafika failu.</p>
+    <!-- OGRE grafiks -->
+    <div class="schedule-block">
+      <div class="schedule-location">
+        <span class="loc-pill">Ogre</span>
+        <h3>Nodarbību grafiks 2026/2027</h3>
+      </div>
+      <div class="sched-wrap">
+        <table class="sched-table">
+          <thead>
+            <tr>
+              <th class="col-day">Diena</th>
+              <th>14:00–15:00</th>
+              <th>15:00–16:00</th>
+              <th>16:00–17:00</th>
+              <th>17:00–18:00</th>
+              <th>18:00–19:00</th>
+              <th>19:00–20:00</th>
+              <th>20:00–21:00</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-day">Pirmdiena</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><span class="class-name">POP DANCE 1</span><span class="class-group">Next Generation</span></td>
+              <td><span class="class-name">KIDS DANCE 2</span><span class="class-group">Young &amp; Ambitious</span></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 2</span><span class="class-group">Mega team</span></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 2</span><span class="class-group">Mega team</span></td>
+            </tr>
+            <tr>
+              <td class="col-day">Otrdiena</td>
+              <td></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 1</span><span class="class-group">Cool Kids</span></td>
+              <td><span class="class-name">POP DANCE 2</span><span class="class-group">Fashion kids</span></td>
+              <td><span class="class-name">KIDS DANCE 3</span><span class="class-group">Big Boss</span></td>
+              <td><span class="class-name">KIDS DANCE 1</span><span class="class-group">NEW</span></td>
+              <td><span class="class-name">POP DANCE 3</span><span class="class-group">Party animals</span></td>
+              <td><span class="class-name">POP DANCE 3</span><span class="class-group">Party animals</span></td>
+            </tr>
+            <tr>
+              <td class="col-day">Trešdiena</td>
+              <td></td>
+              <td><span class="class-name">Andrejs un Elizabete</span></td>
+              <td><span class="class-name">POP DANCE 2</span><span class="class-group">Fashion kids</span></td>
+              <td><span class="class-name">LATINO</span></td>
+              <td><span class="class-name">KIDS DANCE 2</span><span class="class-group">Young &amp; Ambitious</span></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 2</span><span class="class-group">Mega team</span></td>
+              <td><span class="class-name">ŠOVA DEJAS</span></td>
+            </tr>
+            <tr>
+              <td class="col-day">Ceturtdiena</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><span class="class-name">POP DANCE 1</span><span class="class-group">Next Generation</span></td>
+              <td><span class="class-name">KIDS DANCE 3</span><span class="class-group">Big Boss</span></td>
+              <td><span class="class-name">STRIP-PLASTIKA</span></td>
+              <td><span class="class-name">LADY LATINO</span><span class="class-group">Solo</span></td>
+            </tr>
+            <tr>
+              <td class="col-day">Piektdiena</td>
+              <td></td>
+              <td></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 1</span><span class="class-group">Cool Kids</span></td>
+              <td><span class="class-name">STREET DANCE &amp; HIP HOP 1</span><span class="class-group">Cool Kids</span></td>
+              <td><span class="class-name">KIDS DANCE 1</span><span class="class-group">NEW</span></td>
+              <td><span class="class-name">SHOW DANCE</span></td>
+              <td><span class="class-name">SHOW DANCE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RĪGA grafiks -->
+    <div class="schedule-block">
+      <div class="schedule-location">
+        <span class="loc-pill">Rīga — Sarkandaugava</span>
+        <h3>Nodarbību grafiks 2026/2027</h3>
+      </div>
+      <div class="sched-wrap">
+        <table class="sched-table">
+          <thead>
+            <tr>
+              <th class="col-day">Diena</th>
+              <th>10:00–11:30</th>
+              <th>16:00–17:30</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-day">Pirmdiena</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="col-day">Otrdiena</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="col-day">Trešdiena</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="col-day">Ceturtdiena</td>
+              <td></td>
+              <td><span class="class-name">HIP HOP &amp; STREET DANCE</span></td>
+            </tr>
+            <tr>
+              <td class="col-day">Piektdiena</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="col-day">Sestdiena</td>
+              <td><span class="class-name">HIP HOP &amp; STREET DANCE 1</span></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>
@@ -1342,6 +1484,7 @@
 
 </body>
 </html>
+
 
 
 
