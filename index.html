@@ -267,41 +267,41 @@
 
   .hero-collage{
     position:relative;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
     height:520px;
   }
-  .hero-collage img{
-    width:100%;height:100%;object-fit:cover;border-radius:3px;
-    box-shadow:0 20px 50px rgba(0,0,0,.5);
-    border:1px solid var(--line);
+  /* Jaunais single-image variants */
+  .hero-collage--single{
+    display:block;
+  }
+  .hero-collage--single .hero-main-photo{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:6px;
+    box-shadow:0 20px 50px rgba(0,0,0,.55), 0 0 0 1px var(--line);
+    display:block;
     transition:transform .55s cubic-bezier(.2,.7,.2,1), box-shadow .55s ease;
   }
-  .hero-collage img:hover{
-    transform:translateY(-6px) scale(1.02);
-    box-shadow:0 30px 60px rgba(214,34,122,.25), 0 0 0 1px rgba(214,34,122,.35);
+  .hero-collage--single .hero-main-photo:hover{
+    transform:scale(1.015);
+    box-shadow:0 30px 60px rgba(214,34,122,.2), 0 0 0 1px rgba(214,34,122,.3);
   }
-  /* zelta zīmogs kolāžas vidū */
+  /* Logo centrā */
   .hero-collage img.hero-seal{
     position:absolute;
     top:50%;left:50%;
     transform:translate(-50%,-50%);
-    width:clamp(115px,13vw,175px);
+    width:clamp(130px,15vw,200px);
     height:auto;
-    max-width:38%;
+    max-width:42%;
     z-index:3;
     pointer-events:none;
     border:0;
     border-radius:0;
     box-shadow:none;
-    filter:drop-shadow(0 10px 26px rgba(0,0,0,.65));
+    filter:drop-shadow(0 6px 24px rgba(0,0,0,.75)) drop-shadow(0 0 2px rgba(0,0,0,.9));
   }
   .hero-collage img.hero-seal:hover{transform:translate(-50%,-50%);box-shadow:none;}
-
-  .hero-collage .tall{grid-row:span 2;}
-  .hero-collage .offset{transform:translateY(36px);}
-  .hero-collage .offset:hover{transform:translateY(30px) scale(1.02);}
 
   /* ===== ABOUT / DIRECTOR ===== */
   .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start;}
@@ -823,7 +823,7 @@
     .about-grid{grid-template-columns:1fr;}
     .director-photo{position:static;max-width:340px;margin:0 auto 30px;}
     .hero-grid{grid-template-columns:1fr;}
-    .hero-collage{height:380px;order:-1;}
+    .hero-collage{height:340px;order:-1;}
     .ach-grid{grid-template-columns:repeat(2,1fr);}
     .press-grid{grid-template-columns:1fr;}
     .partner-grid{grid-template-columns:repeat(2,1fr);}
@@ -906,10 +906,8 @@
         <a href="#kontakti" class="btn-outline">Sazināties</a>
       </div>
     </div>
-    <div class="hero-collage">
-      <img class="tall" src="https://www.triumfsdance.lv/img/dance_show/cheerleaders.jpg" alt="Venetian carnival šovs" fetchpriority="high" decoding="async">
-      <img src="https://www.triumfsdance.lv/img/dance_show/cabaret.jpg" alt="Kabarē šovs" decoding="async">
-      <img class="offset" src="https://www.triumfsdance.lv/img/dance_show/brazil.jpg" alt="Brazīļu šovs" decoding="async">
+    <div class="hero-collage hero-collage--single">
+      <img class="hero-main-photo" src="WhatsApp Image 2026-10-01 at 00.09.28.jpeg" alt="Deju studija TRIUMFS" fetchpriority="high" decoding="async">
       <img class="hero-seal" src="26gadi-removebg-preview%20(1).png" alt="No. 1 — 26 gadi" width="420" height="420" decoding="async">
     </div>
   </div>
@@ -1466,6 +1464,7 @@
 
 </body>
 </html>
+
 
 
 
