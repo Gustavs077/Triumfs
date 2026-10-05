@@ -21,11 +21,11 @@
     --wine-deep:#1a1a1a;
     --wine:#222222;
     --wine-light:#2e2e2e;
-    --gold:#d6227a;
+    --gold:#e32a81;
     --gold-light:#f04d9c;
     --ivory:#f5f0f2;
     --muted:#a89098;
-    --line: rgba(214,34,122,.22);
+    --line: rgba(227,42,129,.22);
     --maxw: 1240px;
     /* Logo izmērs — nomaini šo vienu skaitli, ja gribi lielāku/mazāku logo */
     --logo-h: 200px;
@@ -857,9 +857,67 @@
     .g-2x3{grid-column:span 1;grid-row:span 2;}
     .studio-photos-label{margin-top:38px;}
   }
+
+  /* ===== SKIP LINK (keyboard accessibility) ===== */
+  .skip-link{
+    position:absolute;top:-999px;left:8px;z-index:99999;
+    background:var(--gold);color:#fff;
+    padding:10px 20px;border-radius:3px;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:.9rem;
+    text-decoration:none;
+    transition:top .2s ease;
+  }
+  .skip-link:focus{top:8px;}
+
+  /* ===== COOKIE BANNER ===== */
+  .cookie-banner{
+    position:fixed;bottom:0;left:0;right:0;z-index:9998;
+    background:rgba(26,26,26,.97);
+    backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:18px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    font-size:.85rem;
+    color:var(--muted);
+    transform:translateY(100%);
+    transition:transform .35s ease;
+  }
+  .cookie-banner.visible{transform:translateY(0);}
+  .cookie-banner a{color:var(--gold-light);text-decoration:underline;}
+  .cookie-banner a:hover{color:var(--ivory);}
+  .cookie-banner-text{flex:1;min-width:200px;}
+  .cookie-banner-btns{display:flex;gap:10px;flex-shrink:0;}
+  .cookie-accept{
+    background:var(--gold);color:#fff;
+    border:none;padding:9px 22px;border-radius:2px;
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:.82rem;
+    letter-spacing:.03em;cursor:pointer;
+    transition:background .2s ease;
+  }
+  .cookie-accept:hover{background:var(--gold-light);}
+  .cookie-accept:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px;}
+  @media(max-width:600px){
+    .cookie-banner{flex-direction:column;align-items:flex-start;}
+  }
+
+  /* ===== FOCUS VISIBLE (keyboard nav) ===== */
+  :focus-visible{
+    outline:2px solid var(--gold-light);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+  /* suppress focus ring for mouse users only on nav links */
+  .nav-links a:focus:not(:focus-visible){outline:none;}
 </style>
 </head>
 <body>
+
+<!-- Skip to main content (keyboard accessibility) -->
+<a href="#par-mums" class="skip-link">Pāriet uz galveno saturu</a>
 
 <div class="curtain" id="curtain">
   <div class="curtain-panel left"></div>
@@ -870,7 +928,7 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Preses materiāls">
   <div class="lightbox-inner">
     <button class="lightbox-close" id="lightboxClose" aria-label="Aizvērt">&#x2715;</button>
-    <img class="lightbox-content" id="lightboxImg" src="" alt="" style="display:none;">
+    <img class="lightbox-content" id="lightboxImg" src="" alt="" role="presentation" style="display:none;">
     <iframe class="lightbox-embed" id="lightboxPdf" src="" style="display:none;" title="Preses materiāls PDF" sandbox="allow-scripts allow-same-origin"></iframe>
     <div class="lightbox-loader" id="lightboxLoader">Ielādē…</div>
     <div class="lightbox-caption" id="lightboxCaption"></div>
@@ -946,12 +1004,12 @@
         <h4>Ceļojums dejā!</h4>
         <div class="date">2008. gada 17. oktobris</div>
         <div class="press-btns">
-          <button class="press-btn" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2008/17.10.2008_2.jpg','Ceļojums dejā! — Ogres Ziņas, 17.10.2008')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <button class="press-btn" aria-label="Skatīt attēlu: Ceļojums dejā! — Ogres Ziņas, 17.10.2008" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2008/17.10.2008_2.jpg','Ceļojums dejā! — Ogres Ziņas, 17.10.2008')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Attēls
           </button>
-          <button class="press-btn" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2008/17.10.2008_2.pdf','Ceļojums dejā! — PDF')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <button class="press-btn" aria-label="Skatīt PDF: Ceļojums dejā! — Ogres Ziņas, 17.10.2008" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2008/17.10.2008_2.pdf','Ceļojums dejā! — PDF')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             PDF
           </button>
         </div>
@@ -961,12 +1019,12 @@
         <h4>Ko dejosim — fokstrotu, tango vai varbūt salsu?</h4>
         <div class="date">2008. gada 20. marts</div>
         <div class="press-btns">
-          <button class="press-btn" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2008/20.03.2008_1.jpg','Ko dejosim — Ogres Ziņas, 20.03.2008')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <button class="press-btn" aria-label="Skatīt attēlu: Ko dejosim — Ogres Ziņas, 20.03.2008" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2008/20.03.2008_1.jpg','Ko dejosim — Ogres Ziņas, 20.03.2008')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Attēls
           </button>
-          <button class="press-btn" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2008/20.03.2008_1.pdf','Ko dejosim — PDF')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <button class="press-btn" aria-label="Skatīt PDF: Ko dejosim — Ogres Ziņas, 20.03.2008" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2008/20.03.2008_1.pdf','Ko dejosim — PDF')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             PDF
           </button>
         </div>
@@ -976,12 +1034,12 @@
         <h4>Deju kluba TRIUMFS panākumu stāsts</h4>
         <div class="date">2006. gada 5. decembris</div>
         <div class="press-btns">
-          <button class="press-btn" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2006/05.12.2006_2.jpg','Panākumu stāsts — Ogres Ziņas, 05.12.2006')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <button class="press-btn" aria-label="Skatīt attēlu: Panākumu stāsts — Ogres Ziņas, 05.12.2006" onclick="openLightbox('img','https://www.triumfsdance.lv/img/articles/2006/05.12.2006_2.jpg','Panākumu stāsts — Ogres Ziņas, 05.12.2006')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Attēls
           </button>
-          <button class="press-btn" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2006/05.12.2006_2.pdf','Panākumu stāsts — PDF')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <button class="press-btn" aria-label="Skatīt PDF: Panākumu stāsts — Ogres Ziņas, 05.12.2006" onclick="openLightbox('pdf','https://www.triumfsdance.lv/img/articles/2006/05.12.2006_2.pdf','Panākumu stāsts — PDF')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             PDF
           </button>
         </div>
@@ -1310,15 +1368,15 @@
         </div>
 
         <div class="social-row">
-          <a class="social-btn" href="https://www.instagram.com/triumfsdance/" target="_blank" rel="noopener noreferrer" aria-label="TRIUMFS Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <a class="social-btn" href="https://www.instagram.com/triumfsdance/" target="_blank" rel="noopener noreferrer" aria-label="TRIUMFS Instagram (atveras jaunā cilnē)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/>
               <circle cx="12" cy="12" r="4.2"/>
               <circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-          <a class="social-btn" href="https://www.tiktok.com/@triumfs.dance.studio?_r=1&amp;_t=ZN-98PdB9Xlldm" target="_blank" rel="noopener noreferrer" aria-label="TRIUMFS TikTok">
-            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+          <a class="social-btn" href="https://www.tiktok.com/@triumfs.dance.studio?_r=1&amp;_t=ZN-98PdB9Xlldm" target="_blank" rel="noopener noreferrer" aria-label="TRIUMFS TikTok (atveras jaunā cilnē)">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true" focusable="false">
               <path d="M16.5 5.6A4.3 4.3 0 0 1 15.4 2.8h-3.1v12.5a2.6 2.6 0 1 1-2.6-2.6c.26 0 .5.04.74.1V9.7a5.7 5.7 0 1 0 4.96 5.65V9.1a7.4 7.4 0 0 0 4.3 1.38V7.36a4.3 4.3 0 0 1-3.2-1.76z"/>
             </svg>
           </a>
@@ -1360,12 +1418,38 @@
 
 <footer>
   <div class="wrap">
-    <a href="#par-mums" class="logo" aria-label="TRIUMFS">
+    <a href="#par-mums" class="logo" aria-label="TRIUMFS sākumlapa">
      <img src="triumfslogo.png" alt="TRIUMFS Dance Studio" width="861" height="601" decoding="async">
     </a>
     <p>© <span id="year"></span> Deju studija TRIUMFS. Visas tiesības aizsargātas.</p>
+    <p style="margin-top:10px;font-size:.8rem;color:var(--muted);">
+      Juridiskā adrese: Jaunatnes iela 6, Ogre, Latvija · 
+      Tālr.: <a href="tel:+37129264995" style="color:var(--muted);">(+371) 29 264 995</a> · 
+      E-pasts: <a href="mailto:info@triumfsdance.lv" style="color:var(--muted);">info@triumfsdance.lv</a>
+    </p>
+    <nav aria-label="Juridiskās lapas" style="margin-top:16px;display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+      <a href="privatuma-politika.html" style="font-size:.8rem;color:var(--muted);text-decoration:underline;">Privātuma politika</a>
+      <a href="lietosanas-noteikumi.html" style="font-size:.8rem;color:var(--muted);text-decoration:underline;">Lietošanas noteikumi</a>
+      <a href="sikdatnu-politika.html" style="font-size:.8rem;color:var(--muted);text-decoration:underline;">Sīkdatņu politika</a>
+    </nav>
+    <p style="margin-top:14px;font-size:.75rem;color:#6b5a62;">
+      Vietne izmanto Google Fonts pakalpojumu tipografijas nodrošināšanai. 
+      Apmeklējot šo vietni, Jūsu IP adrese var tikt nodota Google serveriem (ASV). 
+      Sīkāk: <a href="privatuma-politika.html" style="color:#6b5a62;text-decoration:underline;">Privātuma politika</a>.
+    </p>
   </div>
 </footer>
+
+<!-- ===== COOKIE BANNER ===== -->
+<div class="cookie-banner" id="cookieBanner" role="region" aria-label="Sīkdatņu paziņojums">
+  <div class="cookie-banner-text">
+    <strong style="color:var(--ivory);">Sīkdatnes</strong> — šī vietne izmanto Google Fonts pakalpojumu, kas var saglabāt sīkdatnes. Neizmantojam analītikas vai mārketinga sīkdatnes.
+    <a href="sikdatnu-politika.html">Uzzināt vairāk</a>
+  </div>
+  <div class="cookie-banner-btns">
+    <button class="cookie-accept" id="cookieAccept">Sapratu</button>
+  </div>
+</div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -1460,10 +1544,28 @@
   lbClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // ===== COOKIE BANNER =====
+  (function(){
+    const banner = document.getElementById('cookieBanner');
+    const btn    = document.getElementById('cookieAccept');
+    try {
+      if (!localStorage.getItem('cookie_notice_seen')) {
+        setTimeout(() => banner.classList.add('visible'), 800);
+      }
+    } catch(e) {
+      banner.classList.add('visible');
+    }
+    btn.addEventListener('click', () => {
+      banner.classList.remove('visible');
+      try { localStorage.setItem('cookie_notice_seen','1'); } catch(e){}
+    });
+  })();
 </script>
 
 </body>
 </html>
+
 
 
 
